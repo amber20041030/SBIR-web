@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 /* Keep the mobile back-to-top button above the visible footer. */
 document.addEventListener("DOMContentLoaded",()=>{
-  const button=document.getElementById("backToTop"),footer=document.querySelector(".field-footer");
+  const button=document.getElementById("backToTop"),footer=document.querySelector(".site-company-footer");
   if(!button||!footer)return;
   const updateFooterLift=()=>{
     const lift=innerWidth<=780?Math.max(0,innerHeight-footer.getBoundingClientRect().top):0;

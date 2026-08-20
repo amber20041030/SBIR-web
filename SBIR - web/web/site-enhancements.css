@@ -68,3 +68,14 @@
 .ai-assistant-frame{width:100%;min-height:0;flex:1;border:0;background:#fff}body.ai-assistant-open{overflow:hidden}
 @media(max-width:620px){.ai-assistant-launcher{right:16px;bottom:16px;width:92px;height:60px;border-radius:0}.ai-assistant-modal{padding:10px}.ai-assistant-panel{width:calc(100vw - 20px);height:calc(100dvh - 20px);border-radius:22px}.ai-assistant-header{min-height:54px;padding-left:17px}}
 @media(prefers-reduced-motion:reduce){.ai-assistant-launcher{transition:none}}
+
+/* White footer used by field and news pages; homepage remains dark. */
+.site-company-footer.footer-light{border-top:1px solid rgba(73,91,82,.16);background:#fff;color:#26382f;box-shadow:inset 0 1px rgba(255,255,255,.96)}
+.footer-light .footer-company-logo{border:1px solid #e4e8e5;background:#fff;box-shadow:0 12px 30px rgba(45,62,54,.12)}
+.footer-light .footer-company-logo img{filter:none!important;opacity:1!important;object-fit:contain!important}
+.footer-light .footer-company-info a,.footer-light .footer-company-info span,.footer-light .footer-company-actions a{color:#5a6c63}
+.footer-light .footer-company-info .footer-company-name{color:#26382f}
+.footer-light .footer-made-by{color:#7b8781}
+.footer-light .footer-social-link{color:#52675d}
+.footer-light .footer-social-link:hover,.footer-light .footer-social-link:focus-visible{color:#315e4b;opacity:1}
+.footer-light .footer-top-link{border-left-color:rgba(73,91,82,.2);color:#455b50}

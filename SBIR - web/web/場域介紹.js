@@ -191,7 +191,7 @@ hero.addEventListener("pointerup",event=>{
 hero.addEventListener("pointercancel",resetSwipe);
 hero.addEventListener("dragstart",event=>event.preventDefault());
 /* Footer-aware back-to-top control. */
-const fieldBackToTop=document.getElementById("backToTop"),fieldFooter=document.querySelector(".field-footer");
+const fieldBackToTop=document.getElementById("backToTop"),fieldFooter=document.querySelector(".site-company-footer");
 const updateFieldBackToTop=()=>{
   fieldBackToTop?.classList.toggle("show",scrollY>360);
   if(!fieldBackToTop||!fieldFooter)return;
