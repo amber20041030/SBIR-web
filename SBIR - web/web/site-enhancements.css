@@ -56,7 +56,7 @@
 @media (prefers-reduced-motion: reduce) { .footer-social-link { transition: none; } }
 
 /* Homepage AI travel assistant */
-.ai-assistant-launcher{position:fixed;z-index:120;right:8px;bottom:24px;width:60px;height:107px;aspect-ratio:9/16;padding:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;transition:transform .2s,filter .2s}
+.ai-assistant-launcher{position:fixed;z-index:120;right:8px;bottom:24px;width:119px;height:212px;aspect-ratio:9/16;padding:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;transition:transform .2s,filter .2s}
 .ai-assistant-launcher img{width:100%;height:100%;display:block;object-fit:cover}.ai-assistant-launcher:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05)}.ai-assistant-launcher:focus-visible{outline:3px solid #b8d6c6;outline-offset:4px}
 .ai-assistant-modal[hidden]{display:none}.ai-assistant-modal{position:fixed;z-index:200;inset:0;display:grid;place-items:center;padding:24px}
 .ai-assistant-backdrop{position:absolute;inset:0;background:rgba(2,8,5,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -66,7 +66,7 @@
 .ai-assistant-close{width:38px;height:38px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .ai-assistant-close:hover,.ai-assistant-close:focus-visible{background:rgba(255,255,255,.17)}
 .ai-assistant-frame{width:100%;min-height:0;flex:1;border:0;background:#fff}body.ai-assistant-open{overflow:hidden}
-@media(max-width:620px){.ai-assistant-launcher{right:4px;bottom:16px;width:50px;height:89px;aspect-ratio:9/16;border-radius:0}.ai-assistant-modal{padding:10px}.ai-assistant-panel{width:calc(100vw - 20px);height:calc(100dvh - 20px);border-radius:22px}.ai-assistant-header{min-height:54px;padding-left:17px}}
+@media(max-width:620px){.ai-assistant-launcher{right:4px;bottom:16px;width:96px;height:171px;aspect-ratio:9/16;border-radius:0}.ai-assistant-modal{padding:10px}.ai-assistant-panel{width:calc(100vw - 20px);height:calc(100dvh - 20px);border-radius:22px}.ai-assistant-header{min-height:54px;padding-left:17px}}
 @media(prefers-reduced-motion:reduce){.ai-assistant-launcher{transition:none}}
 
 /* White footer used by field and news pages; homepage remains dark. */
