@@ -56,8 +56,8 @@
 @media (prefers-reduced-motion: reduce) { .footer-social-link { transition: none; } }
 
 /* Homepage AI travel assistant */
-.ai-assistant-launcher{position:fixed;z-index:120;right:24px;bottom:24px;width:76px;height:76px;padding:0;overflow:hidden;border:0;border-radius:24px;background:transparent;box-shadow:0 14px 38px rgba(0,0,0,.36);cursor:pointer;transition:transform .2s,filter .2s}
-.ai-assistant-launcher img{width:100%;height:100%;display:block;object-fit:cover}.ai-assistant-launcher:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05)}.ai-assistant-launcher:focus-visible{outline:3px solid #b8d6c6;outline-offset:4px}
+.ai-assistant-launcher{position:fixed;z-index:120;right:24px;bottom:24px;width:110px;height:72px;padding:0;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;transition:transform .2s,filter .2s}
+.ai-assistant-launcher img{width:100%;height:100%;display:block;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.38))}.ai-assistant-launcher:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05)}.ai-assistant-launcher:focus-visible{outline:3px solid #b8d6c6;outline-offset:4px}
 .ai-assistant-modal[hidden]{display:none}.ai-assistant-modal{position:fixed;z-index:200;inset:0;display:grid;place-items:center;padding:24px}
 .ai-assistant-backdrop{position:absolute;inset:0;background:rgba(2,8,5,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .ai-assistant-panel{position:relative;width:min(980px,calc(100vw - 48px));height:min(760px,calc(100dvh - 48px));display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:28px;background:#f5f7f5;box-shadow:0 35px 100px rgba(0,0,0,.55)}
@@ -66,5 +66,5 @@
 .ai-assistant-close{width:38px;height:38px;display:grid;place-items:center;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .ai-assistant-close:hover,.ai-assistant-close:focus-visible{background:rgba(255,255,255,.17)}
 .ai-assistant-frame{width:100%;min-height:0;flex:1;border:0;background:#fff}body.ai-assistant-open{overflow:hidden}
-@media(max-width:620px){.ai-assistant-launcher{right:16px;bottom:16px;width:66px;height:66px;border-radius:20px}.ai-assistant-modal{padding:10px}.ai-assistant-panel{width:calc(100vw - 20px);height:calc(100dvh - 20px);border-radius:22px}.ai-assistant-header{min-height:54px;padding-left:17px}}
+@media(max-width:620px){.ai-assistant-launcher{right:16px;bottom:16px;width:92px;height:60px;border-radius:0}.ai-assistant-modal{padding:10px}.ai-assistant-panel{width:calc(100vw - 20px);height:calc(100dvh - 20px);border-radius:22px}.ai-assistant-header{min-height:54px;padding-left:17px}}
 @media(prefers-reduced-motion:reduce){.ai-assistant-launcher{transition:none}}
