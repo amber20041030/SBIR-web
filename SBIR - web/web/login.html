@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d1712">
+  <title>會員中心｜桃園偏鄉輕旅行</title>
+  <meta name="description" content="桃園偏鄉輕旅行會員登入、註冊與驗證流程。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+<main class="auth-page">
+  <a class="auth-back" id="backLink" href="index.html" aria-label="返回原頁面"></a>
+  <section class="auth-card" id="authCard" aria-live="polite">
+
+    <div class="view-stage" id="viewStage">
+      <section class="auth-view is-active" data-view="login" aria-labelledby="loginTitle">
+        <img class="auth-logo" src="../imgs/Logo-2.png" alt="桃園偏鄉輕旅行 Logo">
+        <header class="view-header"><h1 id="loginTitle">歡迎回來</h1><p>登入帳號，繼續探索更多在地旅程</p></header>
+        <div class="segmented" role="tablist" aria-label="登入方式">
+          <button class="is-active" type="button" data-login-tab="email" role="tab" aria-selected="true">電子郵件</button>
+          <button type="button" data-login-tab="phone" role="tab" aria-selected="false">電話號碼</button>
+        </div>
+        <form class="form-stack login-panel is-active" id="emailLoginForm" data-login-panel="email" novalidate>
+          <div class="field"><label for="loginEmail">電子郵件</label><input id="loginEmail" type="email" autocomplete="email" placeholder="name@example.com" required><p class="field-error" id="loginEmailError"></p></div>
+          <div class="field"><div class="label-row"><label for="loginPassword">密碼</label><button class="text-link" id="forgotPasswordBtn" type="button">忘記密碼？</button></div><div class="input-wrap"><input class="password-input" id="loginPassword" type="password" autocomplete="current-password" placeholder="請輸入密碼" required><button class="password-toggle" type="button" data-password-target="loginPassword" aria-label="顯示密碼" aria-pressed="false"><i class="fa-regular fa-eye"></i><i class="fa-regular fa-eye-slash"></i></button></div><p class="field-error" id="loginPasswordError"></p></div>
+          <div class="status-panel" id="loginAlert" hidden></div>
+          <button class="primary-btn" id="emailLoginSubmit" type="submit"><span>登入</span></button>
+        </form>
+        <form class="form-stack login-panel" id="phoneLoginForm" data-login-panel="phone" novalidate hidden>
+          <div class="field"><label for="loginPhone">電話號碼</label><div class="inline-send"><input id="loginPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx" maxlength="10" required><button class="secondary-btn send-code" id="loginSendCode" type="button" disabled>發送驗證碼</button></div><p class="field-error" id="loginPhoneError"></p></div>
+          <div class="field"><label for="loginOtp">驗證碼</label><input id="loginOtp" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="輸入 6 位數驗證碼" maxlength="6" required><p class="field-error" id="loginOtpError"></p><p class="field-hint">驗證碼：123456</p></div>
+          <div class="status-panel" id="phoneLoginAlert" hidden></div>
+          <button class="primary-btn" id="phoneLoginSubmit" type="submit" disabled><span>使用驗證碼登入</span></button>
+        </form>
+        <div class="divider"><span>或使用其他方式繼續</span></div>
+        <div class="social-grid">
+          <button class="social-btn" type="button" data-social="apple"><i class="fa-brands fa-apple"></i><span>使用 Apple</span></button>
+          <button class="social-btn" type="button" data-social="google"><svg class="google-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23Z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.78.43 3.45 1.18 4.93l2.85-2.22.81-.62Z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53Z"/></svg><span>Google</span></button>
+          <button class="social-btn" type="button" data-social="facebook"><i class="fa-brands fa-facebook"></i><span>Facebook</span></button>
+        </div>
+        <p class="switch-line">還沒有帳號？ <button class="text-link strong" type="button" data-switch="register">建立帳號</button></p>
+      </section>
+
+      <section class="auth-view" data-view="register" aria-labelledby="registerTitle" hidden>
+        <button class="register-logo-trigger" id="registerLogo" type="button" aria-label="隨機填入一組註冊資料" title="點擊隨機填入註冊資料"><img class="auth-logo" src="../imgs/Logo-2.png" alt="桃園偏鄉輕旅行 Logo"></button>
+        <header class="view-header"><h1 id="registerTitle">建立新帳號</h1><p>加入會員，收藏旅程、集章與限定優惠</p></header>
+        <form class="form-stack compact" id="registerForm" novalidate>
+          <div class="field"><label for="registerName">姓名</label><input id="registerName" type="text" autocomplete="name" placeholder="你的姓名" required><p class="field-error"></p></div>
+          <div class="field"><label for="registerEmail">電子郵件</label><input id="registerEmail" type="email" autocomplete="email" placeholder="name@example.com" required><p class="field-error" id="registerEmailError"></p></div>
+          <div class="field"><label for="registerPhone">電話驗證</label><div class="phone-verify-row"><input id="registerPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx" maxlength="10" required><button class="secondary-btn send-code" id="registerSendCode" type="button" disabled>發送驗證碼</button><input id="registerOtp" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="驗證碼" maxlength="6" required></div><p class="field-error" id="registerPhoneError"></p><p class="field-hint" id="registerPhoneHint">輸入有效電話後即可發送；驗證碼為 123456</p></div>
+          <div class="field"><label for="registerPassword">密碼</label><div class="input-wrap"><input class="password-input" id="registerPassword" type="password" autocomplete="new-password" placeholder="建立密碼" required><button class="password-toggle" type="button" data-password-target="registerPassword" aria-label="顯示密碼" aria-pressed="false"><i class="fa-regular fa-eye"></i><i class="fa-regular fa-eye-slash"></i></button></div><ul class="password-rules" id="passwordRules"><li data-rule="length">至少 8 個字元</li><li data-rule="letter">包含英文字母</li><li data-rule="number">包含數字</li></ul></div>
+          <div class="field"><label for="confirmPassword">確認密碼</label><div class="input-wrap"><input class="password-input" id="confirmPassword" type="password" autocomplete="new-password" placeholder="再次輸入密碼" required><button class="password-toggle" type="button" data-password-target="confirmPassword" aria-label="顯示密碼" aria-pressed="false"><i class="fa-regular fa-eye"></i><i class="fa-regular fa-eye-slash"></i></button></div><p class="field-error" id="confirmPasswordError"></p></div>
+          <label class="terms-check"><input id="termsCheck" type="checkbox"><span>我已閱讀並同意 <button type="button" class="text-link" data-legal="terms">服務條款</button> 與 <button type="button" class="text-link" data-legal="privacy">隱私權政策</button></span></label>
+          <div class="status-panel" id="registerAlert" hidden></div>
+          <button class="primary-btn" id="registerSubmit" type="submit" disabled><span>建立帳號</span></button>
+        </form>
+        <div class="divider"><span>或使用其他方式繼續</span></div>
+        <div class="social-grid" aria-label="其他註冊方式">
+          <button class="social-btn" type="button" data-social="apple"><i class="fa-brands fa-apple"></i><span>使用 Apple</span></button>
+          <button class="social-btn" type="button" data-social="google"><svg class="google-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23Z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.78.43 3.45 1.18 4.93l2.85-2.22.81-.62Z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53Z"/></svg><span>Google</span></button>
+          <button class="social-btn" type="button" data-social="facebook"><i class="fa-brands fa-facebook"></i><span>Facebook</span></button>
+        </div>
+        <p class="switch-line">已經有帳號？ <button class="text-link strong" type="button" data-switch="login">登入</button></p>
+      </section>
+
+      <section class="auth-view compact-view" data-view="forgot" hidden>
+        <header class="view-header"><span class="view-icon"><i class="fa-regular fa-envelope"></i></span><h1>忘記密碼？</h1><p>輸入你註冊時使用的電子郵件，我們會寄送密碼重設連結給你。</p></header>
+        <form class="form-stack" id="forgotForm" novalidate><div class="field"><label for="forgotEmail">電子郵件</label><input id="forgotEmail" type="email" autocomplete="email" placeholder="user@example.com" required><p class="field-error" id="forgotEmailError"></p></div><button class="primary-btn" id="forgotSubmit" type="submit"><span>寄送重設連結</span></button><button class="secondary-btn full" type="button" data-switch="login">返回登入</button></form>
+      </section>
+
+      <section class="auth-view compact-view" data-view="forgot-sent" hidden>
+        <header class="view-header"><span class="view-icon success"><i class="fa-solid fa-paper-plane"></i></span><h1>檢查你的電子郵件</h1><p>我們已將密碼重設連結寄送至：</p><strong class="display-email" id="forgotSentEmail"></strong></header>
+        <div class="action-stack"><button class="primary-btn" type="button" data-switch="login">返回登入</button><button class="text-link strong" id="resendResetBtn" type="button">重新寄送</button></div>
+      </section>
+
+      <section class="auth-view compact-view" data-view="verify" hidden>
+        <header class="view-header"><span class="view-icon"><i class="fa-regular fa-envelope-open"></i></span><h1>驗證你的電子郵件</h1><p>我們已將驗證信寄送至：</p><strong class="display-email" id="verificationEmail"></strong><p>請前往電子郵件信箱，點擊驗證連結以完成帳號建立。</p></header><p class="expiry-notice"><i class="fa-solid fa-clock"></i><span>如果 15 分鐘內未驗證電子郵件，帳號即失效。</span></p>
+        <div class="action-stack"><button class="primary-btn" id="simulateVerifyBtn" type="button"><span>開啟驗證信</span></button><div class="inline-actions"><span>沒有收到驗證信？</span><button class="text-link strong" id="resendVerificationBtn" type="button">重新寄送</button></div></div>
+        <details class="demo-tools"><summary>驗證狀態切換</summary><div><button type="button" data-demo-verify="success">驗證成功</button><button type="button" data-demo-verify="expired">連結過期</button><button type="button" data-demo-verify="invalid">無效連結</button><button type="button" data-demo-verify="verified">已驗證</button></div></details>
+      </section>
+
+      <section class="auth-view compact-view" data-view="verify-loading" hidden><div class="center-state"><span class="spinner large"></span><h1>正在驗證你的電子郵件...</h1><p>請稍候，我們正在確認驗證連結。</p></div></section>
+
+      <section class="auth-view compact-view" data-view="verify-result" hidden>
+        <header class="view-header"><span class="view-icon result" id="verifyResultIcon"></span><h1 id="verifyResultTitle"></h1><p id="verifyResultText"></p></header>
+        <div class="action-stack" id="verifyResultActions"></div>
+      </section>
+
+      <section class="auth-view compact-view" data-view="welcome" hidden>
+        <header class="view-header">
+          <div class="avatar-uploader">
+            <div class="profile-avatar profile-avatar-large"><img id="welcomeAvatar" alt="你的大頭照" hidden><span class="avatar-fallback" id="welcomeAvatarFallback"><i class="fa-solid fa-user"></i></span></div>
+            <label class="avatar-upload-btn" for="avatarUpload"><i class="fa-solid fa-camera"></i> 上傳你的大頭照<input id="avatarUpload" type="file" accept="image/jpeg,image/png,image/webp"></label>
+            <p class="avatar-hint" id="avatarUploadHint">支援 JPG、PNG 或 WebP，圖片會自動裁切</p>
+          </div>
+          <h1>歡迎加入</h1><p>你的帳號已經準備完成。<br>現在可以開始使用所有功能。</p>
+        </header>
+        <button class="primary-btn" id="startExploreBtn" type="button">開始探索</button>
+      </section>
+
+      <section class="auth-view compact-view" data-view="dashboard" hidden>
+        <header class="view-header"><div class="profile-avatar profile-avatar-dashboard"><img id="dashboardAvatar" alt="會員大頭照" hidden><span class="avatar-fallback" id="dashboardAvatarFallback"><i class="fa-solid fa-user"></i></span></div><h1>歡迎回來</h1><p>你的會員帳號已成功登入</p></header>
+        <div class="member-card"><div><span>會員姓名</span><strong id="memberName"></strong></div><div><span>會員 Email</span><strong id="memberEmail"></strong></div><div><span>會員電話</span><strong id="memberPhone"></strong></div><div><span>帳號狀態</span><div class="status-badges"><strong class="verified-badge"><i class="fa-solid fa-circle-check"></i> Email 已驗證</strong><strong class="verified-badge" id="phoneVerifiedBadge"><i class="fa-solid fa-circle-check"></i> 電話已驗證</strong></div></div></div>
+        <div class="action-stack"><button class="primary-btn" id="returnToSiteBtn" type="button">開始使用</button></div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<div class="modal-backdrop" id="modalBackdrop" hidden><section class="glass-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" type="button" aria-label="關閉"><i class="fa-solid fa-xmark"></i></button><div id="modalContent"></div></section></div>
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+<script src="auth.js"></script>
+</body>
+</html>

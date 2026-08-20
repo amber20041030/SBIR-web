@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數位集章趣 - 桃園偏鄉輕旅行</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#B8D6C6',      
+                        'brand-dark': '#3B352F',       
+                        'stamp-red': '#FF4D4D', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-image: 
+                linear-gradient(rgba(15, 25, 20, 0.8), rgba(15, 25, 20, 0.95)), 
+                url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* --- Apple 風格深色毛玻璃設計 --- */
+        .apple-glass-card {
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(30px) saturate(120%);
+            -webkit-backdrop-filter: blur(30px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 32px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .apple-glass-nav {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .apple-glass-modal {
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        /* 按鈕 (綠色毛玻璃) */
+        .apple-glass-btn-green {
+            background: rgba(184, 214, 198, 0.8); 
+            backdrop-filter: blur(25px) saturate(130%);
+            -webkit-backdrop-filter: blur(25px) saturate(130%);
+            border: 1px solid rgba(184, 214, 198, 0.9);
+            border-radius: 20px;
+            color: #3B352F; 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            transition: all 0.2s ease;
+        }
+        .apple-glass-btn-green:hover:not(:disabled) {
+            background: rgba(184, 214, 198, 0.9);
+            transform: translateY(-2px);
+        }
+        .apple-glass-btn-green:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        /* 按鈕 (次要/取消/反灰狀態) */
+        .apple-glass-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+        .apple-glass-btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .apple-glass-btn-secondary:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        /* 集章格與印章樣式 */
+        .stamp-slot {
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            position: relative;
+        }
+        .stamp-slotted {
+            border: 2px solid rgba(255, 77, 77, 0.2) !important;
+            background: rgba(255, 77, 77, 0.05) !important;
+        }
+        .stamp {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #FF4D4D;
+            color: #FF4D4D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            opacity: 0.85;
+            box-shadow: inset 0 0 2px rgba(255,77,77,0.5), 0 0 4px rgba(255,77,77,0.3);
+            background: radial-gradient(circle, transparent 70%, rgba(255,77,77,0.1) 100%);
+        }
+        
+        .r-1 { transform: rotate(-15deg); }
+        .r-2 { transform: rotate(10deg); }
+        .r-3 { transform: rotate(-5deg); }
+        .r-4 { transform: rotate(20deg); }
+        .r-5 { transform: rotate(-25deg); }
+
+        .stamp-appear {
+            animation: stampDrop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes stampDrop {
+            0% { transform: scale(3) rotate(-30deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1) rotate(-10deg); opacity: 0.9; }
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .location-error-backdrop {
+            background: rgba(5, 13, 9, 0.68);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        .location-error-dialog {
+            width: min(512px, calc(100vw - 32px));
+            padding: 40px;
+            background: rgba(69, 78, 73, 0.58);
+            backdrop-filter: blur(32px) saturate(125%);
+            -webkit-backdrop-filter: blur(32px) saturate(125%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.13);
+        }
+
+        .location-error-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.045);
+        }
+
+        .location-error-retry {
+            min-height: 58px;
+            background: rgba(255, 255, 255, 0.075);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 20px;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06);
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .location-error-retry:hover {
+            background: rgba(255, 255, 255, 0.13);
+            transform: translateY(-1px);
+        }
+
+        .location-error-retry:active { transform: scale(0.98); }
+
+        @media (max-width: 520px) {
+            .location-error-dialog { padding: 32px 24px; border-radius: 28px; }
+            .location-error-icon { width: 72px; height: 72px; margin-bottom: 18px; }
+            .location-error-retry { min-height: 54px; }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    /* Shared Apple-style floating navigation */
+.global-nav{position:fixed;z-index:40;top:16px;left:50%;width:min(1440px,calc(100% - 32px));transform:translateX(-50%);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(12,22,17,.62);box-shadow:0 14px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(30px) saturate(165%);-webkit-backdrop-filter:blur(30px) saturate(165%);transition:top .25s,background .25s,box-shadow .25s}.global-nav.scrolled{top:10px;background:rgba(10,18,14,.88);box-shadow:0 18px 55px rgba(0,0,0,.36)}.g-nav-inner{position:relative;min-height:68px;padding:0 13px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.g-brand{height:52px;min-width:174px;display:flex;align-items:center;text-decoration:none}.g-brand img{display:block;width:auto;height:46px;max-width:180px;object-fit:contain;filter:drop-shadow(0 2px 7px rgba(0,0,0,.32))}.g-nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:1px;white-space:nowrap}.g-nav-links a,.g-nav-links .g-placeholder{padding:10px 10px;border-radius:13px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:.2s}.g-nav-links a:hover,.g-nav-links a:focus-visible{outline:0;background:rgba(255,255,255,.09);color:#fff}.g-nav-links a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-nav-links .g-placeholder{color:rgba(255,255,255,.48);cursor:default}.g-actions{margin-left:auto;display:flex;align-items:center;gap:7px}.g-auth,.g-cart-btn{height:38px;padding:0 12px;border-radius:12px;font:800 11px "Noto Sans TC",sans-serif;white-space:nowrap;cursor:pointer;transition:.2s}.g-login{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.78)}.g-login:hover{background:rgba(255,255,255,.1);color:#fff}.g-signup{border:1px solid rgba(184,214,198,.68);background:rgba(184,214,198,.91);color:#26382f;box-shadow:inset 0 1px rgba(255,255,255,.5)}.g-signup:hover{background:#d9ebe1;transform:translateY(-1px)}.g-cart-btn{position:relative;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff}.g-cart-btn:hover{background:rgba(255,255,255,.13)}.g-cart-btn #cartBadge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#b8d6c6;color:#26382f;font-size:9px;transform:scale(0);transition:transform .2s}.g-menu-btn{display:none;width:42px;height:42px;margin-left:auto;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}.g-menu-btn span,.g-menu-btn:before,.g-menu-btn:after{content:"";display:block;width:17px;height:1.5px;margin:4px auto;border-radius:2px;background:currentColor;transition:.25s}.g-menu-btn[aria-expanded=true] span{opacity:0}.g-menu-btn[aria-expanded=true]:before{transform:translateY(5.5px) rotate(45deg)}.g-menu-btn[aria-expanded=true]:after{transform:translateY(-5.5px) rotate(-45deg)}.g-mobile-menu{display:none}.g-nav-spacer{height:94px}
+@media(max-width:1180px) and (min-width:921px){.global-nav{width:calc(100% - 20px)}.g-nav-inner{padding-left:12px;gap:8px}.g-brand{min-width:142px}.g-brand img{height:40px;max-width:145px}.g-nav-links a,.g-nav-links .g-placeholder{padding-inline:7px;font-size:11px}.g-auth,.g-cart-btn{padding-inline:9px}}
+@media(max-width:920px){.global-nav{top:10px;width:calc(100% - 20px);border-radius:21px}.g-nav-inner{min-height:60px;padding:0 10px 0 14px}.g-brand{height:44px;min-width:0}.g-brand img{height:39px;max-width:145px}.g-nav-links,.g-actions{display:none}.g-menu-btn{display:block}.g-mobile-menu{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s,opacity .25s}.g-mobile-menu.open{grid-template-rows:1fr;opacity:1}.g-mobile-inner{overflow:hidden}.g-mobile-actions{display:flex;gap:7px;padding:4px 12px 8px}.g-mobile-actions .g-auth,.g-mobile-actions .g-cart-btn{flex:1}.g-mobile-menu nav{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:0 12px 13px}.g-mobile-menu nav a,.g-mobile-menu nav .g-placeholder{padding:12px 13px;border-radius:13px;color:rgba(255,255,255,.72);font-size:12px;font-weight:600;text-decoration:none}.g-mobile-menu nav a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-mobile-menu nav .g-placeholder{color:rgba(255,255,255,.45)}.g-nav-spacer{height:82px}}
+@media(max-width:520px){.g-mobile-menu nav{grid-template-columns:1fr}}</style>
+  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css">
+</head>
+<body class="min-h-screen antialiased flex flex-col relative overflow-x-hidden">
+
+    <!-- 頂部導覽列 -->
+    <header class="global-nav" id="globalNav"><div class="g-nav-inner"><a class="g-brand" href="index.html" aria-label="桃園偏鄉輕旅行首頁"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a><nav class="g-nav-links" aria-label="主要導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a class="active" href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav><div class="g-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><button class="g-menu-btn" id="globalMenuBtn" type="button" aria-expanded="false" aria-controls="globalMobileMenu" aria-label="開啟選單"><span></span></button></div><div class="g-mobile-menu" id="globalMobileMenu"><div class="g-mobile-inner"><div class="g-mobile-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><nav aria-label="行動版導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a class="active" href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav></div></div></header><div class="g-nav-spacer" aria-hidden="true"></div>
+
+    <!-- 主內容區塊 -->
+    <main class="flex-1 w-full max-w-5xl mx-auto px-4 py-8 md:py-12 relative flex flex-col items-center justify-center" id="mainContent">
+    </main>
+
+    <!-- 1. 定位權限彈窗 -->
+    <div id="locationPrompt" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 fade-in">
+        <div class="apple-glass-modal p-6 w-full max-w-sm text-center">
+            <div class="w-16 h-16 mx-auto bg-brand-green/20 rounded-full flex items-center justify-center mb-4 border border-brand-green/30">
+                <svg class="w-8 h-8 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">允許取用您的位置？</h3>
+            <p class="text-sm text-white/70 mb-6 leading-relaxed">為了確認您是否抵達集章指定地點，我們需要取用您的目前位置</p>
+            
+            <div class="flex gap-3">
+                <button id="btnCancel" class="flex-1 py-3 apple-glass-btn-secondary font-bold text-sm">取消</button>
+                <button id="btnConfirm" class="flex-1 py-3 apple-glass-btn-green font-bold text-sm text-brand-dark">允許</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 2. 定位失敗彈窗（預設隱藏） -->
+    <div id="locationErrorModal" class="location-error-backdrop fixed inset-0 z-[60] hidden items-center justify-center px-4 py-6 opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="locationErrorTitle" aria-describedby="locationErrorDescription">
+        <div id="locationErrorBox" class="location-error-dialog text-center transform scale-95 transition-transform duration-300">
+            <div class="location-error-icon" aria-hidden="true">
+                <span class="text-[42px] leading-none drop-shadow-[0_8px_12px_rgba(0,0,0,0.3)]">📍</span>
+            </div>
+            <h2 id="locationErrorTitle" class="text-2xl font-bold text-white mb-3">定位失敗</h2>
+            <p id="locationErrorDescription" class="text-white/60 text-sm md:text-base leading-relaxed mb-8">已開啟定位服務，但目前無法取得您的位置。請移至訊號良好的地方後再試一次。</p>
+            <button id="btnErrorRetry" type="button" class="location-error-retry w-full px-6 text-base font-bold text-white">重新嘗試</button>
+        </div>
+    </div>
+    <!-- 2. 兌換禮物彈窗 (預設隱藏) -->
+    <div id="giftModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-md px-4 opacity-0 transition-opacity duration-300">
+        <div class="apple-glass-modal p-6 md:p-8 w-full max-w-sm text-center transform scale-95 transition-transform duration-300 flex flex-col items-center justify-center" id="giftBox">
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 text-5xl drop-shadow-[0_0_15px_rgba(184,214,198,0.8)]">🎁</div>
+            
+            <!-- 標題文字與下方說明垂直置中對齊 -->
+            <div class="w-full flex flex-col items-center justify-center text-center">
+                <h3 class="text-2xl font-bold mt-4 mb-1 text-white">恭喜達成集章任務</h3>
+                <p class="text-xs text-white/70 mb-4">感謝您的參與，這是為您準備的心意</p>
+            </div>
+            
+            <!-- 精美小禮圖片 -->
+            <div class="mb-4 flex justify-center w-full">
+                <img src="../imgs/旅行餐具組.webp" alt="旅行餐具組" class="w-40 h-auto object-contain rounded-2xl border border-white/20 shadow-md bg-white/5 p-2">
+            </div>
+            
+            <!-- 標題文字 -->
+            <h4 class="text-lg font-bold text-white mb-6 tracking-wide drop-shadow-md text-center w-full">旅行餐具組</h4>
+            
+            <button id="btnConfirmRedeem" class="w-full py-4 apple-glass-btn-green font-bold text-lg text-brand-dark">
+                確定兌換
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const locationPrompt = document.getElementById('locationPrompt');
+            const btnCancel = document.getElementById('btnCancel');
+            const btnConfirm = document.getElementById('btnConfirm');
+            const mainContent = document.getElementById('mainContent');
+            const giftModal = document.getElementById('giftModal');
+            const giftBox = document.getElementById('giftBox');
+            const btnConfirmRedeem = document.getElementById('btnConfirmRedeem');
+            const locationErrorModal = document.getElementById('locationErrorModal');
+            const locationErrorBox = document.getElementById('locationErrorBox');
+            const btnErrorRetry = document.getElementById('btnErrorRetry');
+
+            const showLocationError = () => {
+                locationErrorModal.classList.remove('hidden');
+                locationErrorModal.classList.add('flex');
+                locationErrorModal.setAttribute('aria-hidden', 'false');
+
+                requestAnimationFrame(() => {
+                    locationErrorModal.classList.remove('opacity-0');
+                    locationErrorBox.classList.remove('scale-95');
+                    locationErrorBox.classList.add('scale-100');
+                    btnErrorRetry.focus();
+                });
+            };
+
+            const hideLocationError = () => {
+                locationErrorModal.classList.add('opacity-0');
+                locationErrorBox.classList.remove('scale-100');
+                locationErrorBox.classList.add('scale-95');
+
+                setTimeout(() => {
+                    locationErrorModal.classList.add('hidden');
+                    locationErrorModal.classList.remove('flex');
+                    locationErrorModal.setAttribute('aria-hidden', 'true');
+                }, 300);
+            };
+
+            btnErrorRetry.addEventListener('click', hideLocationError);
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && locationErrorModal.getAttribute('aria-hidden') === 'false') {
+                    hideLocationError();
+                }
+            });
+
+
+            // 1. 取消定位
+            btnCancel.addEventListener('click', () => {
+                locationPrompt.classList.add('hidden');
+                mainContent.innerHTML = `
+                    <div class="w-full max-w-lg fade-in">
+                        <div class="apple-glass-card p-10 w-full text-center">
+                            <div class="w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-5 border border-white/10">
+                                <span class="text-4xl opacity-50">📍</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-white mb-3">無法獲取位置資訊</h2>
+                            <p class="text-white/60 text-sm md:text-base leading-relaxed mb-8">請至手機的「設定」>「隱私權」開啟定位服務，才能順利參與數位集章喔！</p>
+                            <button onclick="location.reload()" class="w-full px-6 py-4 apple-glass-btn-secondary text-base font-bold">重新嘗試</button>
+                        </div>
+                    </div>
+                `;
+
+                const btnRetryLocation = mainContent.querySelector('button');
+                btnRetryLocation.removeAttribute('onclick');
+                btnRetryLocation.addEventListener('click', showLocationError);
+            });
+
+            // 2. 確定開啟定位
+            btnConfirm.addEventListener('click', () => {
+                locationPrompt.classList.add('hidden');
+                
+                mainContent.innerHTML = `
+                    <div class="w-full max-w-lg fade-in">
+                        <div class="apple-glass-card p-10 w-full flex flex-col items-center justify-center min-h-[300px]">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-4 h-4 bg-brand-green rounded-full typing-dot shadow-[0_0_15px_rgba(184,214,198,0.6)]"></div>
+                                <div class="w-4 h-4 bg-brand-green rounded-full typing-dot shadow-[0_0_15px_rgba(184,214,198,0.6)]"></div>
+                                <div class="w-4 h-4 bg-brand-green rounded-full typing-dot shadow-[0_0_15px_rgba(184,214,198,0.6)]"></div>
+                            </div>
+                            <p class="text-brand-green font-bold text-xl tracking-widest mb-2">正在定位中</p>
+                            <p class="text-white/50 text-sm">搜尋集章景點...</p>
+                        </div>
+                    </div>
+                `;
+
+                // 模擬 2 秒後定位成功
+                setTimeout(() => {
+                    mainContent.innerHTML = `
+                        <div class="w-full max-w-5xl fade-in">
+                            <div class="apple-glass-card p-6 md:p-10 w-full flex flex-col md:flex-row gap-8 items-stretch">
+                                
+                                <!-- 左側：地圖 -->
+                                <div class="w-full md:w-1/2 rounded-2xl overflow-hidden border border-white/20 shadow-lg min-h-[250px] md:min-h-[500px] relative">
+                                    <iframe 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.6908298740327!2d121.34059200000002!3d24.703152600000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346813b46d2005b3%3A0xe6e222a48f7d93aa!2z5ouJ5ouJ5bGx6Jit6aCC5qGD5p6X4oCU5rC06Jyc5qGD5p6c5ZyS!5e0!3m2!1szh-TW!2stw!4v1786591008507!5m2!1szh-TW!2stw" 
+                                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" class="absolute inset-0">
+                                    </iframe>
+                                </div>
+
+                                <!-- 右側：集章與進度 -->
+                                <div class="w-full md:w-1/2 flex flex-col justify-center">
+                                    <div class="flex items-center justify-between mb-4 md:mb-6">
+                                        <div class="bg-brand-green/20 text-brand-green text-sm font-bold py-1.5 px-4 rounded-full border border-brand-green/40 flex items-center gap-2">
+                                            <div class="w-2.5 h-2.5 bg-brand-green rounded-full animate-pulse shadow-[0_0_8px_rgba(184,214,198,0.8)]"></div>
+                                            定位成功 - 桃園市復興區華陵里
+                                        </div>
+                                    </div>
+                                    
+                                    <h2 class="text-3xl md:text-4xl font-black text-white mb-2 tracking-wide drop-shadow-md">拉拉山蘭頂桃林</h2>
+                                    <p class="text-lg md:text-xl text-brand-green font-medium mb-6">— 水蜜桃果園</p>
+                                    
+                                    <!-- 確定集章按鈕 -->
+                                    <button id="btnStamp" class="w-full py-4 apple-glass-btn-green text-lg font-bold flex justify-center items-center gap-2 mb-8">
+                                        <svg class="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>確定集章</span>
+                                    </button>
+
+                                    <div class="border-t border-white/20 pt-6 mt-auto">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h3 class="text-xl font-bold text-white tracking-wide">數位集章進度</h3>
+                                            <span class="text-brand-green font-bold bg-brand-green/10 px-3 py-1 rounded-lg border border-brand-green/30" id="progressText">9 / 10</span>
+                                        </div>
+
+                                        <!-- 10格集章區 -->
+                                        <div class="grid grid-cols-5 gap-3 md:gap-4">
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-1">桃</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-2">園</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-3">偏</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-4">鄉</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-5">輕</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-2">旅</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-1">行</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-4">讚</div></div>
+                                            <div class="stamp-slot stamp-slotted"><div class="stamp r-3">喔</div></div>
+                                            <div class="stamp-slot" id="slot10"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 兌換按鈕 -->
+                                    <div class="mt-8">
+                                        <button id="btnRedeem" class="w-full py-4 apple-glass-btn-green font-bold text-lg text-brand-dark hidden">
+                                            🎁 兌換精美小禮
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const btnStamp = document.getElementById('btnStamp');
+                    btnStamp.addEventListener('click', function() {
+                        this.disabled = true;
+                        this.classList.replace('apple-glass-btn-green', 'apple-glass-btn-secondary');
+                        this.classList.add('cursor-not-allowed', 'opacity-60');
+                        this.innerHTML = '<span class="text-white">已完成本次集章</span>';
+                        
+                        const slot10 = document.getElementById('slot10');
+                        slot10.classList.add('stamp-slotted');
+                        slot10.innerHTML = '<div class="stamp stamp-appear">賞</div>';
+                        
+                        document.getElementById('progressText').innerText = "10 / 10";
+                        
+                        setTimeout(() => {
+                            const btnRedeem = document.getElementById('btnRedeem');
+                            btnRedeem.classList.remove('hidden');
+                            btnRedeem.classList.add('fade-in');
+
+                            btnRedeem.addEventListener('click', () => {
+                                giftModal.classList.remove('hidden');
+                                giftModal.classList.add('flex');
+                                setTimeout(() => {
+                                    giftModal.classList.remove('opacity-0');
+                                    giftBox.classList.remove('scale-95');
+                                    giftBox.classList.add('scale-100');
+                                }, 50);
+                            });
+
+                        }, 800);
+                    });
+
+                }, 2000);
+            });
+
+            // 3. 確定兌換禮物
+            btnConfirmRedeem.addEventListener('click', () => {
+                window.SbirRewards?.addGift({
+                    id: 'stamp-travel-cutlery-set',
+                    title: '旅行餐具組',
+                    source: '桃園偏鄉數位集章',
+                    description: '完成 10 枚數位集章任務獲得',
+                    status: 'received'
+                });
+                giftModal.classList.add('opacity-0');
+                giftBox.classList.remove('scale-100');
+                giftBox.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    giftModal.classList.add('hidden');
+                    giftModal.classList.remove('flex');
+                    
+                    const btnRedeem = document.getElementById('btnRedeem');
+                    if (btnRedeem) {
+                        btnRedeem.disabled = true;
+                        btnRedeem.classList.replace('apple-glass-btn-green', 'apple-glass-btn-secondary');
+                        btnRedeem.classList.add('cursor-not-allowed', 'opacity-60');
+                        btnRedeem.innerText = '已兌換精美小禮';
+                    }
+                }, 300);
+            });
+        });
+    </script>
+<script>
+(()=>{const nav=document.getElementById("globalNav"),button=document.getElementById("globalMenuBtn"),menu=document.getElementById("globalMobileMenu");if(!nav||!button||!menu)return;const close=()=>{menu.classList.remove("open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","開啟選單")};button.addEventListener("click",()=>{const open=button.getAttribute("aria-expanded")==="true";menu.classList.toggle("open",!open);button.setAttribute("aria-expanded",String(!open));button.setAttribute("aria-label",open?"開啟選單":"關閉選單")});menu.querySelectorAll("a").forEach(link=>link.addEventListener("click",close));window.addEventListener("resize",()=>{if(innerWidth>920)close()});window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>24),{passive:true})})();
+</script><script src="member-rewards.js"></script><script src="protected-auth-gate.js"></script><script src="site-auth.js"></script></body>
+</html>
+
+

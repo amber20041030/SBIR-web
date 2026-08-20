@@ -1,0 +1,39 @@
+<!doctype html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>購物車 - 桃園偏鄉輕旅行</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="experience-flow.css"><link rel="stylesheet" href="experience-cart.css"><link rel="stylesheet" href="nav-unified.css"></head><body>
+<header class="nav global-nav"><div class="navin g-nav-inner"><a class="brand g-brand" href="index.html"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a><nav class="links"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a class="active" href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav><div class="actions g-actions"><button class="ghost g-login">登入</button><button class="primary g-signup">註冊</button></div></div></header><div class="spacer"></div>
+<main class="max-w-7xl mx-auto px-4 md:px-6 pb-20"><div class="flex flex-wrap items-center justify-between gap-4 py-7"><div><p class="text-xs tracking-[.2em] text-emerald-200 font-black">CART</p><h1 class="text-3xl md:text-4xl font-black mt-2">購物車</h1></div><div class="flex items-center gap-3"><span class="flow-step active"><i>1</i><span class="flow-label">確認購物車</span></span><span class="text-white/25">—</span><span class="flow-step"><i>2</i><span class="flow-label">填寫資料</span></span><span class="text-white/25">—</span><span class="flow-step"><i>3</i><span class="flow-label">付款</span></span><span class="text-white/25">—</span><span class="flow-step"><i>4</i><span class="flow-label">完成預訂</span></span></div></div>
+<div class="grid lg:grid-cols-[1fr_350px] gap-x-7 gap-y-4 items-start"><section class="contents"><div class="flex items-center justify-between lg:col-start-1 lg:row-start-1"><label class="text-sm font-bold"><input id="selectAll" type="checkbox" checked class="cart-check mr-2" onchange="toggleAll(this.checked)">全選</label><a href="體驗活動線上報名.html" class="text-sm text-emerald-200 font-bold">繼續探索體驗</a></div><div id="cartList" class="space-y-4 lg:col-start-1 lg:row-start-2"></div></section>
+<aside class="glass p-6 sticky top-28 lg:col-start-2 lg:row-start-2"><h2 class="text-xl font-black">訂單摘要</h2><div class="mt-5"><div class="summary-line"><span>已選方案</span><b id="selectedCount">0 項</b></div><div class="summary-line"><span>參加人次</span><b id="guestTotal">0 人</b></div><div class="summary-line total"><span>總計</span><strong id="grandTotal" class="text-emerald-200">NT$ 0</strong></div></div><button id="checkoutBtn" onclick="goCheckout()" class="primary w-full py-4 mt-6">前往結帳</button><p class="text-center text-[11px] text-white/40 mt-4">下一步填寫聯絡資料與發票資訊</p></aside></div></main>
+<script>
+const KEY="experienceCart";let selected=new Set();
+function read(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch{return[]}}
+function money(n){return"NT$ "+Number(n||0).toLocaleString()}
+function render(){const cart=read();if(!selected.size)cart.forEach((_,i)=>selected.add(i));const box=document.getElementById("cartList");if(!cart.length){box.innerHTML='<div class="glass empty"><div class="text-5xl">🧺</div><h2 class="text-xl font-black mt-5">購物車目前是空的</h2><p class="text-white/50 mt-2">先去挑選一堂喜歡的體驗課程吧！</p><a href="體驗活動線上報名.html" class="primary inline-block px-8 py-3 mt-6">探索體驗</a></div>';document.getElementById("selectAll").checked=false;updateSummary(cart);return}box.innerHTML=cart.map((item,i)=>'<article class="glass cart-row"><input class="cart-check item-check" type="checkbox" '+(selected.has(i)?"checked":"")+' onchange="toggleItem('+i+',this.checked)"><img src="'+item.image+'" alt="" onerror="this.onerror=null;this.src=\'../imgs/水蜜桃.png\'"><div class="cart-course-info"><h3>'+item.title+'</h3><p>'+item.date+'</p><strong>'+money(item.price*item.guests)+'</strong></div><div class="cart-guest-stepper"><button type="button" onclick="changeCartGuests('+i+',-1)">−</button><span>'+item.guests+' 人</span><button type="button" onclick="changeCartGuests('+i+',1)">＋</button></div><button class="remove" onclick="removeItem('+i+')" aria-label="刪除">×</button></article>').join("");updateSummary(cart)}
+function toggleItem(i,on){on?selected.add(i):selected.delete(i);syncAll();updateSummary(read())}function toggleAll(on){selected.clear();if(on)read().forEach((_,i)=>selected.add(i));render()}function syncAll(){const total=read().length;document.getElementById("selectAll").checked=total>0&&selected.size===total}
+function updateSummary(cart){const chosen=cart.filter((_,i)=>selected.has(i)),guests=chosen.reduce((s,x)=>s+x.guests,0),total=chosen.reduce((s,x)=>s+x.price*x.guests,0);document.getElementById("selectedCount").textContent=chosen.length+" 項";document.getElementById("guestTotal").textContent=guests+" 人";document.getElementById("grandTotal").textContent=money(total);document.getElementById("checkoutBtn").disabled=!chosen.length;document.getElementById("checkoutBtn").style.opacity=chosen.length?1:.45}
+function changeCartGuests(i,delta){const cart=read();if(!cart[i])return;cart[i].guests=Math.max(1,Math.min(8,Number(cart[i].guests||1)+delta));localStorage.setItem(KEY,JSON.stringify(cart));render()}
+function removeItem(i){const cart=read();cart.splice(i,1);localStorage.setItem(KEY,JSON.stringify(cart));selected.clear();render()}
+function courseMatches(a,b){return(a.key&&b.key&&a.key===b.key)||(String(a.id)===String(b.id)&&a.date===b.date)}
+function restorePendingCheckoutSelection(){
+ const raw=sessionStorage.getItem("experiencePendingCheckoutItems");if(!raw||!localStorage.getItem("sbir_current_user"))return;
+ try{const pending=JSON.parse(raw),cart=read();selected.clear();cart.forEach((item,index)=>{if(pending.some(saved=>courseMatches(item,saved)))selected.add(index)});sessionStorage.removeItem("experiencePendingCheckoutItems");if(location.search)history.replaceState(null,"","購物車.html")}catch{sessionStorage.removeItem("experiencePendingCheckoutItems")}
+}
+function goCheckout(){
+ const cart=read(),chosen=cart.filter((_,i)=>selected.has(i));if(!chosen.length)return;
+ if(!localStorage.getItem("sbir_current_user")){
+  sessionStorage.setItem("experiencePendingCheckoutItems",JSON.stringify(chosen));
+  showExperienceLoginGate({message:"登入後會保留剛才選取的課程，讓你繼續完成結帳。",returnTo:"購物車.html?resumeCheckout=1"});
+  return;
+ }
+ sessionStorage.setItem("experienceCheckoutItems",JSON.stringify(chosen));location.href="體驗結帳.html";
+}
+document.addEventListener("DOMContentLoaded",()=>{restorePendingCheckoutSelection();render()});
+</script><script src="experience-cart.js"></script><script src="site-auth.js"></script></body></html>
+
+
+
+
+
+
+
+
+

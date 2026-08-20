@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>詳細訂單｜桃園偏鄉輕旅行</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="experience-flow.css"><link rel="stylesheet" href="nav-unified.css"><link rel="stylesheet" href="order-detail.css">
+</head>
+<body>
+
+<main class="max-w-6xl mx-auto px-4 md:px-6 pb-20">
+<div class="detail-heading"><a href="member.html#orders">← 返回我的訂單</a><div class="detail-heading-row"><div><p id="orderKind">ORDER DETAILS</p><h1>詳細訂單</h1><span id="orderId"></span></div><b id="orderStatus" class="order-status"></b></div></div>
+<div id="detailView" class="detail-layout"><div class="detail-main">
+<section class="detail-card"><div class="section-title"><span>01</span><div><small id="itemKindEnglish">ORDER ITEMS</small><h2 id="itemKind">訂單品項</h2></div></div><div id="orderItems" class="order-items"></div></section>
+<section class="detail-card"><div class="section-title"><span>02</span><div><small>CONTACT INFORMATION</small><h2 id="contactTitle">聯絡資料</h2></div></div><div id="contactDetails" class="detail-rows"></div></section>
+<section id="recipientSection" class="detail-card"><div class="section-title"><span>03</span><div><small>RECIPIENT & DELIVERY</small><h2>收件與配送資料</h2></div></div><div id="recipientDetails" class="detail-rows"></div></section>
+<section class="detail-card"><div class="section-title"><span id="invoiceStep">04</span><div><small>INVOICE</small><h2>發票資訊</h2></div></div><div id="invoiceDetails" class="detail-rows"></div></section>
+<section id="noteSection" class="detail-card"><div class="section-title"><span>05</span><div><small>ORDER NOTE</small><h2>訂單備註</h2></div></div><p id="orderNote" class="order-note-detail"></p></section>
+</div>
+<aside class="detail-card summary-card"><h2>訂單摘要</h2><div id="progress" class="order-progress"></div><div id="summaryDetails" class="detail-rows"></div><div class="amount-lines"><div><span>商品／課程小計</span><b id="subtotal"></b></div><div id="shippingRow"><span>運費</span><b id="shipping"></b></div><div id="discountRow"><span>優惠折抵</span><b id="discount"></b></div><div class="amount-total"><span>付款總額</span><strong id="total"></strong></div></div><a id="continueLink" class="primary continue-link" href="index.html">繼續探索</a></aside>
+</div>
+<section id="notFound" class="not-found detail-card"><div>📄</div><h2>找不到此訂單</h2><p>訂單可能不存在，或不屬於目前登入帳號。</p><a class="primary" href="member.html#orders">返回我的訂單</a></section>
+</main>
+<script src="order-detail.js"></script><script src="site-auth.js"></script>
+</body></html>

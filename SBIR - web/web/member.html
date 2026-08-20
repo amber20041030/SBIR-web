@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d1712">
+  <title>會員中心｜桃園偏鄉輕旅行</title>
+  <meta name="description" content="桃園偏鄉輕旅行會員中心">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="member.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+  <header class="member-header">
+    <a class="member-brand" href="index.html" aria-label="返回桃園偏鄉輕旅行首頁"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a>
+    <a class="back-home" href="index.html"><i class="fa-solid fa-arrow-left"></i><span>回到首頁</span></a>
+  </header>
+
+  <main class="member-shell">
+    <aside class="member-sidebar" aria-label="會員中心導覽">
+      <div class="member-summary">
+        <div class="member-avatar"><img id="sidebarAvatar" alt="會員大頭照" hidden><span id="sidebarAvatarFallback"><i class="fa-solid fa-user"></i></span></div>
+        <div><strong id="sidebarName">會員</strong><span id="sidebarEmail"></span></div>
+      </div>
+      <nav class="member-nav" id="memberNav">
+        <button class="is-active" type="button" data-section="profile"><i class="fa-regular fa-user"></i><span>個人資料</span></button>
+        <button type="button" data-section="orders"><i class="fa-solid fa-box"></i><span>我的訂單</span></button>
+        <button type="button" data-section="gifts"><i class="fa-solid fa-gift"></i><span>我的禮物</span></button>
+        <button type="button" data-section="coupons"><i class="fa-solid fa-ticket"></i><span>優惠券</span></button>
+        <button type="button" data-section="addresses"><i class="fa-solid fa-location-dot"></i><span>收貨地址</span></button>
+        <button type="button" data-section="security"><i class="fa-solid fa-shield-halved"></i><span>帳號與安全</span></button>
+        <button type="button" data-section="notifications"><i class="fa-regular fa-bell"></i><span>通知設定</span></button>
+      </nav>
+      <button class="sidebar-logout" id="memberLogoutBtn" type="button"><i class="fa-solid fa-arrow-right-from-bracket"></i> 登出</button>
+    </aside>
+
+    <div class="member-content">
+      <section class="content-section is-active" data-panel="profile">
+        <h1 class="sr-only">個人資料</h1>
+        <div class="settings-card unified-profile-card">
+          <div class="profile-row avatar-row">
+            <label>頭像</label>
+            <div class="avatar-editor">
+              <div class="profile-avatar"><img id="profileAvatar" alt="會員大頭照" hidden><span id="profileAvatarFallback"><i class="fa-solid fa-user"></i></span></div>
+              <div><label class="secondary-action" for="profileAvatarUpload">更換大頭照<input id="profileAvatarUpload" type="file" accept="image/jpeg,image/png,image/webp"></label><p class="field-message" id="avatarMessage"></p></div>
+            </div>
+          </div>
+
+          <div class="profile-row field"><label for="profileName">姓名／暱稱</label><input id="profileName" type="text" autocomplete="name"><p class="field-message" id="profileNameError"></p></div>
+
+          <div class="profile-row">
+            <div class="field"><label for="profileEmail">Email <span class="verified-chip" id="emailStatus">已驗證</span></label><input id="profileEmail" type="email" autocomplete="email"><p class="field-message" id="emailMessage"></p></div>
+            <button class="secondary-action send-code" id="sendEmailCodeBtn" type="button" disabled>發送驗證碼</button>
+            <div class="inline-verification" id="emailVerifyArea" hidden><div class="field"><label for="profileEmailCode">Email 驗證碼</label><input id="profileEmailCode" type="text" inputmode="numeric" maxlength="6"><p class="field-message" id="emailCodeMessage"></p></div><button class="primary-action fit" id="verifyEmailBtn" type="button">驗證</button></div>
+          </div>
+
+          <div class="profile-row">
+            <div class="field"><label for="profilePhone">手機號碼 <span class="verified-chip" id="phoneStatus">已驗證</span></label><input id="profilePhone" type="tel" inputmode="numeric" maxlength="10"><p class="field-message" id="phoneMessage"></p></div>
+            <button class="secondary-action send-code" id="sendPhoneCodeBtn" type="button" disabled>發送驗證碼</button>
+            <div class="inline-verification" id="phoneVerifyArea" hidden><div class="field"><label for="profilePhoneCode">簡訊驗證碼</label><input id="profilePhoneCode" type="text" inputmode="numeric" maxlength="6"><p class="field-message" id="phoneCodeMessage"></p></div><button class="primary-action fit" id="verifyPhoneBtn" type="button">驗證</button></div>
+          </div>
+
+          <div class="profile-row field"><label for="profileBirthday">生日 <span class="locked-label" id="birthdayStatus">設定後不可修改</span></label><input id="profileBirthday" type="text" inputmode="numeric" maxlength="8" autocomplete="bday" placeholder="YYYYMMDD"><p class="field-message" id="birthdayMessage"></p></div>
+
+          <div class="profile-row field"><label id="profileGenderLabel">性別</label><div class="gender-select" id="genderDropdown"><button class="gender-select-trigger" id="genderSelectTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="profileGenderLabel genderSelected"><span id="genderSelected">不透露</span><span class="solid-caret" aria-hidden="true"></span></button><div class="gender-select-menu" id="genderSelectMenu" role="listbox" aria-labelledby="profileGenderLabel" hidden><button type="button" role="option" data-gender-option="">不透露</button><button type="button" role="option" data-gender-option="female">女性</button><button type="button" role="option" data-gender-option="male">男性</button><button type="button" role="option" data-gender-option="nonbinary">非二元／其他</button></div><select id="profileGender" hidden tabindex="-1" aria-hidden="true"><option value="">不透露</option><option value="female">女性</option><option value="male">男性</option><option value="nonbinary">非二元／其他</option></select></div></div>
+
+          <div class="profile-row binding-section">
+            <label>帳號綁定</label>
+            <div class="binding-list">
+              <div><span class="binding-provider"><i class="fa-brands fa-apple binding-logo apple" aria-hidden="true"></i><span>Apple</span></span><small data-binding-status="apple">未綁定</small><button class="secondary-action" type="button" data-binding="apple">綁定</button></div>
+              <div><span class="binding-provider"><svg class="binding-logo google" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23Z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 0 0 1 12c0 1.78.43 3.45 1.18 4.93l2.85-2.22.81-.62Z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53Z"/></svg><span>Google</span></span><small data-binding-status="google">未綁定</small><button class="secondary-action" type="button" data-binding="google">綁定</button></div>
+              <div><span class="binding-provider"><i class="fa-brands fa-facebook binding-logo facebook" aria-hidden="true"></i><span>Facebook</span></span><small data-binding-status="facebook">未綁定</small><button class="secondary-action" type="button" data-binding="facebook">綁定</button></div>
+            </div>
+          </div>
+
+          <button class="primary-action fit unified-save" id="savePersonalDataBtn" type="button">儲存資料</button>
+
+          <form class="password-section" id="passwordForm">
+            <label class="section-label">修改密碼</label>
+            <div class="password-fields"><div class="field"><label for="currentPassword">目前密碼</label><input id="currentPassword" type="password" autocomplete="current-password" required><p class="field-message" id="currentPasswordError"></p></div><div class="field"><label for="newPassword">新密碼</label><input id="newPassword" type="password" autocomplete="new-password" required><p class="field-message" id="newPasswordError"></p></div><div class="field"><label for="newPasswordConfirm">確認新密碼</label><input id="newPasswordConfirm" type="password" autocomplete="new-password" required><p class="field-message" id="newPasswordConfirmError"></p></div></div>
+            <p class="form-error" id="passwordError"></p><button class="primary-action fit" type="submit">更新密碼</button>
+          </form>
+        </div>
+      </section>
+      <section class="content-section" data-panel="orders" hidden>
+        <div class="section-heading"><div><p>MY ORDERS</p><h1>我的訂單</h1><span>查看活動與商品訂單狀態</span></div></div>
+        <div class="order-tabs" id="orderTabs" role="tablist" aria-label="訂單類型"><button class="is-active" type="button" role="tab" aria-selected="true" data-order-filter="experience">體驗課程 <span id="experienceOrderCount">0</span></button><button type="button" role="tab" aria-selected="false" data-order-filter="goods">在地好物 <span id="goodsOrderCount">0</span></button></div><div id="memberOrderList" class="member-order-list"></div>
+      </section>
+
+      <section class="content-section" data-panel="gifts" hidden>
+        <div class="section-heading"><div><p>MY GIFTS</p><h1>我的禮物</h1><span>查看集章或活動獲得的禮物</span></div></div>
+        <div class="coupon-tabs gift-tabs" id="giftTabs" role="tablist" aria-label="禮物領取狀態"><button class="is-active" type="button" role="tab" aria-selected="true" data-gift-filter="available">未領取 <span id="availableGiftCount">0</span></button><button type="button" role="tab" aria-selected="false" data-gift-filter="claimed">已領取 <span id="claimedGiftCount">0</span></button></div>
+        <div class="reward-list" id="giftList"></div>
+      </section>
+
+      <section class="content-section" data-panel="coupons" hidden>
+        <div class="section-heading"><div><p>COUPONS</p><h1>優惠券</h1><span>管理可使用與已使用的優惠券</span></div></div>
+        <div class="coupon-tabs" id="couponTabs" role="tablist" aria-label="優惠券狀態"><button class="is-active" type="button" role="tab" aria-selected="true" data-coupon-filter="available">未使用 <span id="availableCouponCount">0</span></button><button type="button" role="tab" aria-selected="false" data-coupon-filter="used">已使用 <span id="usedCouponCount">0</span></button></div>
+        <div class="reward-list" id="couponList"></div>
+      </section>
+
+      <section class="content-section" data-panel="addresses" hidden>
+        <div class="section-heading with-action"><div><p>DELIVERY ADDRESSES</p><h1>收貨地址</h1><span>管理商品配送使用的地址</span></div><button class="primary-action fit" id="toggleAddressFormBtn" type="button"><i class="fa-solid fa-plus"></i> 新增地址</button></div>
+        <form class="settings-card address-form" id="addressForm" hidden>
+          <div class="card-heading"><div><h2>新增收貨地址</h2><p>請填寫完整的收件資訊。</p></div></div>
+          <div class="form-grid"><div class="field"><label for="addressRecipient">收件人</label><input id="addressRecipient" required><p class="field-message" id="addressRecipientError"></p></div><div class="field"><label for="addressPhone">聯絡電話</label><input id="addressPhone" type="tel" inputmode="numeric" maxlength="10" required><p class="field-message" id="addressPhoneError"></p></div><div class="field full"><label for="addressText">收貨地址</label><input id="addressText" required placeholder="縣市、區域、道路與門牌"><p class="field-message" id="addressTextError"></p></div></div>
+          <div class="form-actions"><button class="primary-action fit" type="submit">儲存地址</button><button class="secondary-action" id="cancelAddressBtn" type="button">取消</button></div>
+        </form>
+        <div class="address-list" id="addressList"></div>
+      </section>
+
+      <section class="content-section" data-panel="security" hidden>
+        <div class="section-heading"><div><p>ACCOUNT & SECURITY</p><h1>帳號與安全</h1><span>查看目前帳號的聯絡方式驗證狀態</span></div></div>
+        <div class="security-grid"><div class="security-item"><i class="fa-solid fa-envelope-circle-check"></i><div><strong>電子郵件</strong><span id="securityEmail"></span></div><b>已驗證</b></div><div class="security-item"><i class="fa-solid fa-mobile-screen-button"></i><div><strong>手機號碼</strong><span id="securityPhone"></span></div><b id="securityPhoneStatus">已驗證</b></div></div>
+      </section>
+
+      <section class="content-section" data-panel="notifications" hidden>
+        <div class="section-heading"><div><p>NOTIFICATIONS</p><h1>通知設定</h1><span>選擇你希望收到的會員通知</span></div></div>
+        <div class="settings-card notification-list">
+          <label><div><strong>活動與旅程通知</strong><span>接收活動報名提醒及旅程最新消息</span></div><input type="checkbox" data-notification="activities"><i></i></label>
+          <label><div><strong>訂單狀態通知</strong><span>接收付款、出貨及配送狀態</span></div><input type="checkbox" data-notification="orders"><i></i></label>
+          <label><div><strong>優惠與好康通知</strong><span>接收優惠券與期間限定活動資訊</span></div><input type="checkbox" data-notification="promotions"><i></i></label>
+          <label><div><strong>Email 電子報</strong><span>接收桃園偏鄉旅遊精選內容</span></div><input type="checkbox" data-notification="newsletter"><i></i></label>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <div class="coupon-use-backdrop" id="giftUseBackdrop" hidden>
+    <section class="coupon-use-dialog" role="dialog" aria-modal="true" aria-labelledby="giftUseTitle" aria-describedby="giftUseDescription">
+      <button class="coupon-use-close" id="giftUseClose" type="button" aria-label="關閉領取禮物">×</button>
+      <div class="coupon-use-icon"><i class="fa-solid fa-gift" aria-hidden="true"></i></div>
+      <h2 id="giftUseTitle">領取禮物</h2>
+      <p id="giftUseDescription">請向服務人員出示此畫面，確認後禮物將移至已領取。</p>
+      <div class="coupon-use-summary"><strong id="giftUseName"></strong><span id="giftUseSource"></span><b>會員專屬禮物</b></div>
+      <p class="coupon-use-warning">確定領取後將無法恢復</p>
+      <div class="coupon-use-actions"><button class="secondary-action" id="giftUseCancel" type="button">取消</button><button class="primary-action" id="giftUseConfirm" type="button">確定領取</button></div>
+    </section>
+  </div>
+
+  <div class="coupon-use-backdrop" id="couponUseBackdrop" hidden>
+    <section class="coupon-use-dialog" role="dialog" aria-modal="true" aria-labelledby="couponUseTitle" aria-describedby="couponUseDescription">
+      <button class="coupon-use-close" id="couponUseClose" type="button" aria-label="關閉使用優惠券">×</button>
+      <div class="coupon-use-icon"><i class="fa-solid fa-ticket" aria-hidden="true"></i></div>
+      <h2 id="couponUseTitle">使用優惠券</h2>
+      <p id="couponUseDescription">請向店家出示此畫面，確認後優惠券將移至已使用。</p>
+      <div class="coupon-use-summary"><strong id="couponUseName"></strong><span id="couponUseMerchant"></span><b id="couponUseDiscount"></b></div>
+      <p class="coupon-use-warning">確定使用後將無法恢復</p>
+      <div class="coupon-use-actions"><button class="secondary-action" id="couponUseCancel" type="button">取消</button><button class="primary-action" id="couponUseConfirm" type="button">確定使用</button></div>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="member.js"></script>
+</body>
+</html>

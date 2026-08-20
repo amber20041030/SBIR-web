@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在地好物直送 - 桃園嚴選農特產</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'brand-green': '#B8D6C6', 'brand-dark': '#3B352F' } } } }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-image: linear-gradient(rgba(15, 25, 20, 0.8), rgba(15, 25, 20, 0.95)), url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; background-attachment: fixed; color: #ffffff; }
+        .apple-glass-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(30px) saturate(120%); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+        .apple-glass-nav { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(40px) saturate(150%); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .apple-glass-btn-green { background: rgba(184, 214, 198, 0.9); color: #3B352F; font-weight: bold; border-radius: 16px; transition: 0.3s; }
+        .apple-glass-btn-green:hover { background: #fff; transform: scale(1.02); }
+        .custom-dropdown-trigger { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 12px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .custom-dropdown-menu { background: rgba(30, 30, 35, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; margin-top: 8px; width: 100%; position: absolute; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .custom-dropdown-item { padding: 12px 16px; cursor: pointer; color: white; transition: 0.2s; }
+        .custom-dropdown-item:hover { background-color: #B8D6C6; color: #3B352F; }
+        .filter-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; font-weight: bold; color: #B8D6C6; }
+        .triangle-icon { width: 10px; height: 10px; background-color: #9ca3af; clip-path: polygon(0 0, 100% 0, 50% 100%); transition: transform 0.3s; }
+        .triangle-icon.open { transform: rotate(180deg); }
+        
+        /* 愛心粉色框線與實心狀態 */
+        .heart-btn { color: #f472b6; transition: transform 0.2s; }
+        .heart-btn svg { fill: none; stroke: currentColor; stroke-width: 2; }
+        .heart-btn.heart-active svg { fill: #f472b6; }
+        .heart-btn:active { transform: scale(1.25); }
+
+        /* 購物車側邊欄動畫 */
+        #cartSidebar {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Toast 響應式動畫設定 */
+        #toast {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (min-width: 768px) {
+            #toast {
+                top: 50%; left: 50%; bottom: auto; right: auto;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            #toast.toast-show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            #toast.toast-hide { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+        }
+        @media (max-width: 767px) {
+            #toast {
+                top: 5rem; left: 1rem; right: 1rem; bottom: auto;
+                transform: translateY(-150%);
+            }
+            #toast.toast-show { transform: translateY(0); opacity: 1; }
+            #toast.toast-hide { transform: translateY(-150%); opacity: 0; }
+        }
+    /* Shared Apple-style floating navigation */
+.global-nav{position:fixed;z-index:40;top:16px;left:50%;width:min(1440px,calc(100% - 32px));transform:translateX(-50%);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(12,22,17,.62);box-shadow:0 14px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(30px) saturate(165%);-webkit-backdrop-filter:blur(30px) saturate(165%);transition:top .25s,background .25s,box-shadow .25s}.global-nav.scrolled{top:10px;background:rgba(10,18,14,.88);box-shadow:0 18px 55px rgba(0,0,0,.36)}.g-nav-inner{position:relative;min-height:68px;padding:0 13px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.g-brand{height:52px;min-width:174px;display:flex;align-items:center;text-decoration:none}.g-brand img{display:block;width:auto;height:46px;max-width:180px;object-fit:contain;filter:drop-shadow(0 2px 7px rgba(0,0,0,.32))}.g-nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:1px;white-space:nowrap}.g-nav-links a,.g-nav-links .g-placeholder{padding:10px 10px;border-radius:13px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:.2s}.g-nav-links a:hover,.g-nav-links a:focus-visible{outline:0;background:rgba(255,255,255,.09);color:#fff}.g-nav-links a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-nav-links .g-placeholder{color:rgba(255,255,255,.48);cursor:default}.g-actions{margin-left:auto;display:flex;align-items:center;gap:7px}.g-auth,.g-cart-btn{height:38px;padding:0 12px;border-radius:12px;font:800 11px "Noto Sans TC",sans-serif;white-space:nowrap;cursor:pointer;transition:.2s}.g-login{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.78)}.g-login:hover{background:rgba(255,255,255,.1);color:#fff}.g-signup{border:1px solid rgba(184,214,198,.68);background:rgba(184,214,198,.91);color:#26382f;box-shadow:inset 0 1px rgba(255,255,255,.5)}.g-signup:hover{background:#d9ebe1;transform:translateY(-1px)}.g-cart-btn{position:relative;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff}.g-cart-btn:hover{background:rgba(255,255,255,.13)}.g-cart-btn #cartBadge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#b8d6c6;color:#26382f;font-size:9px;transform:scale(0);transition:transform .2s}.g-menu-btn{display:none;width:42px;height:42px;margin-left:auto;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}.g-menu-btn span,.g-menu-btn:before,.g-menu-btn:after{content:"";display:block;width:17px;height:1.5px;margin:4px auto;border-radius:2px;background:currentColor;transition:.25s}.g-menu-btn[aria-expanded=true] span{opacity:0}.g-menu-btn[aria-expanded=true]:before{transform:translateY(5.5px) rotate(45deg)}.g-menu-btn[aria-expanded=true]:after{transform:translateY(-5.5px) rotate(-45deg)}.g-mobile-menu{display:none}.g-nav-spacer{height:94px}
+@media(max-width:1180px) and (min-width:921px){.global-nav{width:calc(100% - 20px)}.g-nav-inner{padding-left:12px;gap:8px}.g-brand{min-width:142px}.g-brand img{height:40px;max-width:145px}.g-nav-links a,.g-nav-links .g-placeholder{padding-inline:7px;font-size:11px}.g-auth,.g-cart-btn{padding-inline:9px}}
+@media(max-width:920px){.global-nav{top:10px;width:calc(100% - 20px);border-radius:21px}.g-nav-inner{min-height:60px;padding:0 10px 0 14px}.g-brand{height:44px;min-width:0}.g-brand img{height:39px;max-width:145px}.g-nav-links,.g-actions{display:none}.g-menu-btn{display:block}.g-mobile-menu{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s,opacity .25s}.g-mobile-menu.open{grid-template-rows:1fr;opacity:1}.g-mobile-inner{overflow:hidden}.g-mobile-actions{display:flex;gap:7px;padding:4px 12px 8px}.g-mobile-actions .g-auth,.g-mobile-actions .g-cart-btn{flex:1}.g-mobile-menu nav{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:0 12px 13px}.g-mobile-menu nav a,.g-mobile-menu nav .g-placeholder{padding:12px 13px;border-radius:13px;color:rgba(255,255,255,.72);font-size:12px;font-weight:600;text-decoration:none}.g-mobile-menu nav a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-mobile-menu nav .g-placeholder{color:rgba(255,255,255,.45)}.g-nav-spacer{height:82px}}
+@media(max-width:520px){.g-mobile-menu nav{grid-template-columns:1fr}}.g-cart-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px}.g-cart-icon{width:17px;height:17px;flex:0 0 auto}.g-actions .g-cart-btn{order:99}@media(max-width:920px){.g-mobile-actions .g-cart-btn{order:99}}.g-cart-btn .cart-count{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;display:grid;place-items:center;border:2px solid #132019;border-radius:999px;background:#b8d6c6;color:#26382f;font-size:9px;font-weight:900;line-height:1;opacity:0;transform:scale(.55);transition:opacity .18s,transform .18s}.g-cart-btn .cart-count.cart-visible{opacity:1;transform:scale(1)}.g-cart-btn .cart-count.cart-bump{animation:cartCountBump .25s ease}@keyframes cartCountBump{50%{transform:scale(1.25)}}
+        .custom-dropdown-menu{overflow:hidden}
+        .custom-dropdown-item:first-child{border-radius:15px 15px 0 0}
+        .custom-dropdown-item:last-child{border-radius:0 0 15px 15px}
+        #productsSection{scroll-margin-top:110px}
+        .offer-modal{position:fixed;z-index:100;inset:0;padding:18px;display:none;place-items:center;background:rgba(2,8,5,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+        .offer-modal.open{display:grid}
+        .offer-modal-card{position:relative;width:min(470px,100%);padding:30px;border:1px solid rgba(255,255,255,.18);border-radius:28px;background:linear-gradient(145deg,rgba(225,245,234,.15),rgba(7,19,12,.9) 48%),rgba(8,20,13,.92);box-shadow:0 30px 90px rgba(0,0,0,.58),inset 0 1px rgba(255,255,255,.14);text-align:center}
+        .offer-modal-icon{width:64px;height:64px;margin:0 auto 16px;display:grid;place-items:center;border-radius:20px;background:rgba(184,214,198,.16);color:#d9ebe1;font-size:27px}
+.offer-modal-icon svg{width:31px;height:31px}
+#memberOfferButton:disabled{cursor:not-allowed;opacity:.42;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.55)}
+#memberOfferButton:disabled:hover{background:rgba(255,255,255,.05)}
+        .offer-modal-card h2{margin:0;font-size:24px;font-weight:900}
+        .offer-modal-card>p{margin:10px auto 19px;max-width:370px;color:rgba(255,255,255,.64);font-size:12px;line-height:1.75}
+        .offer-coupon{padding:17px;border:1px dashed rgba(184,214,198,.42);border-radius:17px;background:rgba(184,214,198,.08)}
+        .offer-coupon strong,.offer-coupon span{display:block}.offer-coupon strong{font-size:16px}.offer-coupon span{margin-top:5px;color:#b8d6c6;font-size:11px}
+        .offer-modal-actions{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+        .offer-modal-actions a,.offer-modal-actions button{min-height:48px;display:flex;align-items:center;justify-content:center;border-radius:14px;font-size:11px;font-weight:900;text-decoration:none;cursor:pointer}
+        .offer-secondary{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff}.offer-confirm{border:1px solid rgba(255,255,255,.52);background:linear-gradient(110deg,#d9ebe1,#a9cdbb);color:#26382f}
+        @media(max-width:520px){.offer-modal-card{padding:25px 18px 18px;border-radius:23px}.offer-modal-actions{grid-template-columns:1fr}}
+</style>
+  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css">
+</head>
+<body class="min-h-screen">
+
+    <!-- Header -->
+    <header class="global-nav" id="globalNav"><div class="g-nav-inner"><a class="g-brand" href="index.html" aria-label="桃園偏鄉輕旅行首頁"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a><nav class="g-nav-links" aria-label="主要導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a class="active" href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav><div class="g-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button><button class="g-cart-btn" type="button" onclick="toggleCartDrawer(true)"><svg class="g-cart-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6.1M9.5 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>購物車</span><span class="cart-count" aria-label="購物車商品數量">0</span></button></div><button class="g-menu-btn" id="globalMenuBtn" type="button" aria-expanded="false" aria-controls="globalMobileMenu" aria-label="開啟選單"><span></span></button></div><div class="g-mobile-menu" id="globalMobileMenu"><div class="g-mobile-inner"><div class="g-mobile-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button><button class="g-cart-btn" type="button" onclick="toggleCartDrawer(true)"><svg class="g-cart-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6.1M9.5 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>購物車</span><span class="cart-count" aria-label="購物車商品數量">0</span></button></div><nav aria-label="行動版導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a class="active" href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav></div></div></header><div class="g-nav-spacer" aria-hidden="true"></div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Hero Banner -->
+        <section class="relative rounded-3xl overflow-hidden mb-6 h-64 flex items-center p-8 bg-cover bg-left border border-white/10 shadow-2xl" style="background-image: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=1200&q=80'); background-position: left center;">
+            <div class="relative z-10 max-w-xl">
+                <h1 class="text-2xl md:text-3xl font-black mb-2 text-white">當季農特產品，新鮮直送</h1>
+                <p class="text-sm text-white/80 mb-4">會員專屬優惠，體驗後的續購首選，支持在地好農</p>
+                <button id="heroShopButton" type="button" onclick="scrollToProducts()" class="px-6 py-2.5 apple-glass-btn-green text-sm">立即選購</button>
+            </div>
+        </section>
+
+        <!-- Membership Banner -->
+        <section class="apple-glass-card p-5 mb-8 flex items-center justify-between">
+            <div>
+                <h3 class="font-bold text-brand-green text-sm mb-1">VIP 會員優惠</h3>
+                <p class="text-xs text-white/60">線上續購享 9 折，回味在地的好味道</p>
+            </div>
+            <button id="memberOfferButton" type="button" onclick="handleMemberOffer()" class="text-xs px-4 py-2 border border-white/20 rounded-full hover:bg-white/10 transition">登入會員</button>
+        </section>
+
+        <div id="productsSection" class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar (Desktop) -->
+            <aside class="w-full lg:w-72 flex-shrink-0 sticky top-24 self-start hidden lg:block">
+                <div class="apple-glass-card p-6">
+                    <div class="mb-8">
+                        <h4 class="text-sm font-bold text-brand-green mb-3">排序方式</h4>
+                        <div class="relative">
+                            <div class="custom-dropdown-trigger" onclick="toggleDropdown('desktopDropdown')">
+                                <span id="selectedSortDesktop" class="text-sm">最新上架</span>
+                                <div class="triangle-icon"></div>
+                            </div>
+                            <div id="desktopDropdown" class="custom-dropdown-menu hidden">
+                                <div class="custom-dropdown-item" onclick="handleSort('newest', '最新上架', 'desktopDropdown')">最新上架</div>
+                                <div class="custom-dropdown-item" onclick="handleSort('popular', '熱門推薦', 'desktopDropdown')">熱門推薦</div>
+                                <div class="custom-dropdown-item" onclick="handleSort('sales', '銷量最高', 'desktopDropdown')">銷量最高</div>
+                                <div class="custom-dropdown-item" onclick="handleSort('priceAsc', '價格低到高', 'desktopDropdown')">價格低到高</div>
+                                <div class="custom-dropdown-item" onclick="handleSort('priceDesc', '價格高到低', 'desktopDropdown')">價格高到低</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="filterContent"></div>
+                </div>
+            </aside>
+
+            <!-- Product Section -->
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-6 lg:hidden">
+                    <h2 class="text-xl font-black">全部商品</h2>
+                    <button onclick="toggleMobileFilter(true)" class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-white border border-white/20 flex items-center gap-1.5 shadow-lg">
+                        篩選與排序 <span class="text-[10px]">▼</span>
+                    </button>
+                </div>
+
+                <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 購物車側邊欄 (Cart Drawer) -->
+    <div id="cartOverlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity opacity-0" onclick="toggleCartDrawer(false)"></div>
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-zinc-950/95 border-l border-white/10 shadow-2xl z-50 transform translate-x-full flex flex-col">
+        <!-- Cart Header -->
+        <div class="p-5 border-b border-white/10 flex items-center justify-between">
+            <h3 class="font-black text-lg flex items-center gap-2">🛒 購物車明細</h3>
+            <button onclick="toggleCartDrawer(false)" class="text-white/60 hover:text-white text-2xl px-2">×</button>
+        </div>
+        <!-- Cart Items List -->
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- 動態渲染購物車內容 -->
+        </div>
+        <!-- Cart Footer -->
+        <div class="p-5 border-t border-white/10 bg-zinc-900/50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-sm text-white/70">總計金額</span>
+                <span id="cartTotalPrice" class="text-xl font-black text-brand-green">$0</span>
+            </div>
+            <button onclick="checkout()" class="w-full py-3.5 apple-glass-btn-green text-sm shadow-lg">前往結帳</button>
+        </div>
+    </div>
+
+    <!-- Mobile Filter Modal -->
+    <div id="mobileFilterModal" class="fixed inset-0 z-50 hidden bg-black/95 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-black">篩選與排序</h3>
+            <button onclick="toggleMobileFilter(false)" class="text-2xl">×</button>
+        </div>
+        <div id="mobileFilterContent" class="pb-20"></div>
+        <button onclick="toggleMobileFilter(false)" class="w-full py-4 bg-brand-green text-brand-dark font-bold rounded-xl mt-4">查看結果</button>
+    </div>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="fixed z-50 opacity-0 pointer-events-none apple-glass-card px-6 py-4 flex items-center gap-4 border border-brand-green/40 shadow-2xl bg-zinc-900/95">
+        <div class="w-8 h-8 rounded-full bg-brand-green text-brand-dark flex items-center justify-center font-black text-sm flex-shrink-0">✓</div>
+        <div>
+            <p class="text-sm font-bold text-white">已加入購物車</p>
+            <p id="toastMessage" class="text-xs text-white/60">商品已成功放入購物車</p>
+        </div>
+    </div>
+
+    <div id="offerModal" class="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offerModalTitle" onclick="if(event.target===this)closeOfferModal()">
+        <section class="offer-modal-card">
+            <div class="offer-modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5V9a3 3 0 0 0 0 6v2.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5V15a3 3 0 0 0 0-6V6.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v2m0 2v2m0 2v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+            <h2 id="offerModalTitle">優惠券領取成功</h2>
+            <p id="offerModalMessage">優惠券已存入會員中心，可立即選購商品，或前往會員中心查看優惠券。</p>
+            <div class="offer-coupon"><strong>在地好物全品項 9 折券</strong><span>結帳時可於個人折價券中選用</span></div>
+            <div class="offer-modal-actions"><a class="offer-secondary" href="member.html#coupons">查看會員中心優惠券</a><button type="button" class="offer-confirm" onclick="closeOfferModal()">確定</button></div>
+        </section>
+    </div>
+    <script src="goods-store.js"></script>
+    <script>
+        const products = GoodsStore.products.map(product => ({...product, date: new Date(product.date)}));
+
+        let currentSort = 'newest';
+        let cart = GoodsStore.readCart(); // 在地好物獨立購物車
+
+        function toggleHeart(el) { 
+            el.classList.toggle('heart-active'); 
+        }
+
+        // 加入購物車邏輯
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            GoodsStore.add(productId, 1);
+            cart = GoodsStore.readCart();
+            updateCartUI();
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = `「${product.name}」已成功放入購物車`;
+            toast.classList.remove('toast-hide');
+            toast.classList.add('toast-show');
+            if(window.toastTimer) clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => { toast.classList.remove('toast-show'); toast.classList.add('toast-hide'); }, 2500);
+        }
+
+        function openProductDetail(productId) { location.href = `在地好物詳情.html?id=${productId}`; }
+
+        // 更新購物車 UI 與數量徽章
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badges = document.querySelectorAll('.cart-count');
+            badges.forEach(badge => {
+                badge.innerText = totalCount;
+                badge.classList.toggle('cart-visible', totalCount > 0);
+                badge.classList.remove('cart-bump');
+                if (totalCount > 0) {
+                    void badge.offsetWidth;
+                    badge.classList.add('cart-bump');
+                }
+            });
+
+            const container = document.getElementById('cartItemsContainer');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-20 text-white/40 text-sm">購物車目前是空的～快去選購好物吧！</div>`;
+                document.getElementById('cartTotalPrice').innerText = '$0';
+                return;
+            }
+
+            let totalPrice = 0;
+            container.innerHTML = cart.map(item => {
+                totalPrice += item.price * item.quantity;
+                return `
+                    <div class="apple-glass-card p-3 flex items-center gap-3">
+                        <img src="${item.img}" class="w-16 h-16 object-cover rounded-xl flex-shrink-0" onerror="this.src='https://images.unsplash.com/photo-1557800636-894a64c1696f?w=200'">
+                        <div class="flex-1 min-w-0">
+                            <h5 class="font-bold text-xs truncate mb-0.5">${item.name}</h5>
+                            <p class="text-xs text-brand-green font-black mb-2">$${item.price}</p>
+                            <div class="flex items-center gap-2">
+                                <button onclick="changeQuantity(${item.id}, -1)" class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center text-xs hover:bg-white/20">-</button>
+                                <span class="text-xs font-bold w-6 text-center">${item.quantity}</span>
+                                <button onclick="changeQuantity(${item.id}, 1)" class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center text-xs hover:bg-white/20">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-white/40 hover:text-red-400 p-2 transition" title="刪除商品">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartTotalPrice').innerText = `$${totalPrice}`;
+        }
+
+        function changeQuantity(id, delta) {
+            GoodsStore.update(id, delta);
+            cart = GoodsStore.readCart();
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            GoodsStore.remove(id);
+            cart = GoodsStore.readCart();
+            updateCartUI();
+        }
+
+        // 開啟/關閉購物車側邊欄
+        function toggleCartDrawer(open) {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            if (open) {
+                overlay.classList.remove('hidden', 'opacity-0');
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("購物車是空的，請先選購商品！");
+                return;
+            }
+            location.href = "好物購物車.html";
+        }
+
+        function toggleDropdown(id) { document.getElementById(id).classList.toggle('hidden'); }
+        
+        function handleSort(val, text, dropdownId) {
+            currentSort = val;
+            document.getElementById('selectedSortDesktop').innerText = text;
+            document.getElementById(dropdownId).classList.add('hidden');
+            renderProducts();
+        }
+
+        function toggleSection(header) {
+            header.nextElementSibling.classList.toggle('hidden');
+            header.querySelector('.triangle-icon').classList.toggle('open');
+        }
+
+        function renderFilters() {
+            const filterData = [
+                { title: '桃園地區', type: 'district', items: ['桃園區', '中壢區', '平鎮區', '八德區', '楊梅區', '蘆竹區', '大溪區', '龜山區', '大園區', '觀音區', '新屋區', '龍潭區', '復興區'] },
+                { title: '商品分類', type: 'category', items: ['新鮮蔬果', '米・雜糧', '茶葉', '蜂蜜', '加工食品', '飲品', '伴手禮', '禮盒', '季節限定'] },
+                { title: '價格區間', type: 'priceRange', items: ['NT$300 以下', 'NT$301–500', 'NT$501–1,000', 'NT$1,001 以上'] },
+                { title: '商品特色', type: 'feature', items: ['農場直送', '產銷履歷', '有機認證', '友善耕作', '小農自產', '無添加'] },
+                { title: '優惠活動', type: 'promo', items: ['會員優惠', '限時優惠', '滿額免運', '體驗後續購優惠'] }
+            ];
+
+            const html = filterData.map(group => `
+                <div class="border-b border-white/10">
+                    <div class="filter-header" onclick="toggleSection(this)">
+                        <span>${group.title}</span>
+                        <div class="triangle-icon"></div>
+                    </div>
+                    <div class="pb-4 space-y-2 hidden">
+                        ${group.items.map(item => `<label class="flex items-center gap-3 text-sm text-white/70 cursor-pointer"><input type="checkbox" class="accent-brand-green filter-check" data-type="${group.type}" value="${item}" onchange="renderProducts()"> ${item}</label>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('filterContent').innerHTML = html;
+            document.getElementById('mobileFilterContent').innerHTML = html;
+        }
+
+        function renderProducts() {
+            const checkedDistricts = Array.from(document.querySelectorAll('input[data-type="district"]:checked')).map(el => el.value);
+            const checkedCats = Array.from(document.querySelectorAll('input[data-type="category"]:checked')).map(el => el.value);
+            const checkedPrices = Array.from(document.querySelectorAll('input[data-type="priceRange"]:checked')).map(el => el.value);
+            const checkedFeatures = Array.from(document.querySelectorAll('input[data-type="feature"]:checked')).map(el => el.value);
+            const checkedPromos = Array.from(document.querySelectorAll('input[data-type="promo"]:checked')).map(el => el.value);
+
+            let filtered = products.filter(p => {
+                const matchDist = checkedDistricts.length === 0 || checkedDistricts.includes(p.district);
+                const matchCat = checkedCats.length === 0 || checkedCats.includes(p.category);
+                const matchFeature = checkedFeatures.length === 0 || checkedFeatures.includes(p.feature);
+                const matchPromo = checkedPromos.length === 0 || checkedPromos.includes(p.promo);
+                
+                let matchPrice = true;
+                if (checkedPrices.length > 0) {
+                    matchPrice = checkedPrices.some(range => {
+                        if (range === 'NT$300 以下') return p.price <= 300;
+                        if (range === 'NT$301–500') return p.price >= 301 && p.price <= 500;
+                        if (range === 'NT$501–1,000') return p.price >= 501 && p.price <= 1000;
+                        if (range === 'NT$1,001 以上') return p.price >= 1001;
+                        return false;
+                    });
+                }
+
+                return matchDist && matchCat && matchPrice && matchFeature && matchPromo;
+            });
+
+            if (currentSort === 'newest') filtered.sort((a, b) => b.date - a.date);
+            if (currentSort === 'popular') filtered.sort((a, b) => b.sales - a.sales);
+            if (currentSort === 'sales') filtered.sort((a, b) => b.sales - a.sales);
+            if (currentSort === 'priceAsc') filtered.sort((a, b) => a.price - b.price);
+            if (currentSort === 'priceDesc') filtered.sort((a, b) => b.price - a.price);
+
+            const grid = document.getElementById('productsGrid');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-16 text-white/50">沒有找到符合條件的商品</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="apple-glass-card group overflow-hidden flex flex-col cursor-pointer" role="link" tabindex="0" onclick="openProductDetail(${p.id})" onkeydown="if(event.key==='Enter')openProductDetail(${p.id})">
+                    <div class="aspect-square overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='../imgs/旅行餐具組.webp'"></div>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <p class="text-[10px] text-white/50">${p.district}</p>
+                        <h4 class="font-bold text-sm mb-1 group-hover:text-brand-green transition">${p.name}</h4>
+                        <p class="text-[10px] text-white/40 mb-3">${p.desc}</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-brand-green font-black">$${p.price}</span>
+                            <div class="flex items-center gap-3">
+                                <button onclick="event.stopPropagation(); toggleHeart(this)" class="heart-btn transition">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                </button>
+                                <button onclick="event.stopPropagation(); addToCart(${p.id})" class="text-white hover:text-brand-green transition">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        const OFFER_USERS_KEY = 'sbir_demo_users_v3';
+        const OFFER_SESSION_KEY = 'sbir_current_user';
+        const OFFER_RETURN_KEY = 'sbir_auth_return_to';
+        const MEMBER_OFFER_ID = 'goods-member-90off';
+
+        function scrollToProducts() {
+            document.getElementById('productsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function currentOfferUser() {
+            const email = (localStorage.getItem(OFFER_SESSION_KEY) || '').toLowerCase();
+            if (!email) return null;
+            try {
+                const users = JSON.parse(localStorage.getItem(OFFER_USERS_KEY) || '[]');
+                const index = users.findIndex(user => user.email?.toLowerCase() === email);
+                return index >= 0 ? { users, index, user: users[index] } : null;
+            } catch (_) { return null; }
+        }
+
+        function setMemberOfferButton(claimed) {
+            const button = document.getElementById('memberOfferButton');
+            if (!button) return;
+            button.disabled = Boolean(claimed);
+            button.textContent = claimed ? '已領取' : (localStorage.getItem(OFFER_SESSION_KEY) ? '領取優惠' : '登入會員');
+            button.setAttribute('aria-disabled', String(Boolean(claimed)));
+        }
+
+        function initMemberOffer() {
+            const context = currentOfferUser();
+            const claimed = Boolean(context?.user?.coupons?.some(coupon => coupon.id === MEMBER_OFFER_ID));
+            setMemberOfferButton(claimed);
+        }
+
+        function handleMemberOffer() {
+            if (!localStorage.getItem(OFFER_SESSION_KEY)) {
+                sessionStorage.setItem(OFFER_RETURN_KEY, '在地好物直送.html');
+                location.href = 'login.html#login';
+                return;
+            }
+            const context = currentOfferUser();
+            if (!context) {
+                sessionStorage.setItem(OFFER_RETURN_KEY, '在地好物直送.html');
+                location.href = 'login.html#login';
+                return;
+            }
+            const coupons = Array.isArray(context.user.coupons) ? [...context.user.coupons] : [];
+            const alreadyClaimed = coupons.some(coupon => coupon.id === MEMBER_OFFER_ID);
+            if (!alreadyClaimed) {
+                coupons.push({ id: MEMBER_OFFER_ID, title: '在地好物全品項 9 折券', merchant: '在地好物直送', discount: '全品項 9 折', scope: 'sitewide', rate: .9, usageChannel: 'online_goods', description: '僅限在地好物線上購物使用，完成線上結帳後會自動移至已使用。', status: 'available', claimedAt: new Date().toISOString() });
+                context.users[context.index] = { ...context.user, coupons };
+                localStorage.setItem(OFFER_USERS_KEY, JSON.stringify(context.users));
+            }
+            document.getElementById('offerModalTitle').textContent = alreadyClaimed ? '優惠券已領取' : '優惠券領取成功';
+            document.getElementById('offerModalMessage').textContent = alreadyClaimed ? '此優惠券已存放於會員中心，可立即選購商品，或前往會員中心查看優惠券。' : '優惠券已存入會員中心，可立即選購商品，或前往會員中心查看優惠券。';
+            setMemberOfferButton(true);
+            openOfferModal();
+        }
+
+        function openOfferModal() {
+            document.getElementById('offerModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => document.querySelector('#offerModal .offer-confirm')?.focus());
+        }
+
+        function closeOfferModal() {
+            document.getElementById('offerModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('DOMContentLoaded', () => { cart = GoodsStore.readCart(); renderFilters(); renderProducts(); updateCartUI(); initMemberOffer(); });
+        window.addEventListener('goods-cart-change', () => { cart = GoodsStore.readCart(); updateCartUI(); });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape') closeOfferModal(); });
+        function toggleMobileFilter(show) { document.getElementById('mobileFilterModal').classList.toggle('hidden', !show); }
+    </script>
+<script>
+(()=>{const nav=document.getElementById("globalNav"),button=document.getElementById("globalMenuBtn"),menu=document.getElementById("globalMobileMenu");if(!nav||!button||!menu)return;const close=()=>{menu.classList.remove("open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","開啟選單")};button.addEventListener("click",()=>{const open=button.getAttribute("aria-expanded")==="true";menu.classList.toggle("open",!open);button.setAttribute("aria-expanded",String(!open));button.setAttribute("aria-label",open?"開啟選單":"關閉選單")});menu.querySelectorAll("a").forEach(link=>link.addEventListener("click",close));window.addEventListener("resize",()=>{if(innerWidth>920)close()});window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>24),{passive:true})})();
+</script><script src="site-auth.js"></script></body>
+</html>
+
+
+
+
+
+
+
+
+

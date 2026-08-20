@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>體驗活動線上報名 - 桃園偏鄉輕旅行</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'brand-green': '#B8D6C6', 'brand-dark': '#3B352F', 'brand-orange': '#FF7A00' } } } }
+    </script>
+
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-image: linear-gradient(rgba(15, 25, 20, 0.8), rgba(15, 25, 20, 0.95)), url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; background-attachment: fixed; color: #ffffff; }
+        .apple-glass-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(30px) saturate(120%); -webkit-backdrop-filter: blur(30px) saturate(120%); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1); }
+        .apple-glass-nav { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(40px) saturate(150%); -webkit-backdrop-filter: blur(40px) saturate(150%); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
+        .apple-glass-btn-green { background: rgba(184, 214, 198, 0.8); border: 1px solid rgba(184, 214, 198, 0.9); border-radius: 20px; color: #3B352F; font-weight: bold; transition: all 0.2s ease; }
+        .apple-glass-btn-green:hover { background: rgba(184, 214, 198, 0.95); }
+        .apple-glass-btn-secondary { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; color: #ffffff; }
+        .hover-card-up { transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .hover-card-up:hover { transform: translateY(-4px); }
+
+        .custom-dropdown-trigger { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 10px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .custom-dropdown-menu { background: rgba(30, 30, 35, 0.85); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; margin-top: 8px; width: 100%; overflow: hidden; position: absolute; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .custom-dropdown-item { padding: 10px 16px; cursor: pointer; color: white; transition: 0.2s; font-size: 0.875rem; }
+        .custom-dropdown-item:hover { background-color: #B8D6C6; color: #3B352F; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .favorite-btn { width: 28px; height: 31px; padding: 0; display: grid; place-items: center; flex: 0 0 auto; border: 0; border-radius: 0; background: transparent; color: rgba(255,255,255,.78); transition: transform .2s ease, color .2s ease; } .favorite-btn:hover { transform: translateY(-1px) scale(1.12); background: transparent; color: #fff; } .favorite-btn svg { width: 19px; height: 19px; fill: transparent; stroke: currentColor; stroke-width: 1.9; transition: fill .2s ease, transform .2s ease; } .favorite-btn.is-favorite { color: #f3a9b8; background: transparent; } .favorite-btn.is-favorite svg { fill: currentColor; transform: scale(1.06); }
+    /* Shared Apple-style floating navigation */
+.global-nav{position:fixed;z-index:40;top:16px;left:50%;width:min(1440px,calc(100% - 32px));transform:translateX(-50%);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(12,22,17,.62);box-shadow:0 14px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(30px) saturate(165%);-webkit-backdrop-filter:blur(30px) saturate(165%);transition:top .25s,background .25s,box-shadow .25s}.global-nav.scrolled{top:10px;background:rgba(10,18,14,.88);box-shadow:0 18px 55px rgba(0,0,0,.36)}.g-nav-inner{position:relative;min-height:68px;padding:0 13px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.g-brand{height:52px;min-width:174px;display:flex;align-items:center;text-decoration:none}.g-brand img{display:block;width:auto;height:46px;max-width:180px;object-fit:contain;filter:drop-shadow(0 2px 7px rgba(0,0,0,.32))}.g-nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:1px;white-space:nowrap}.g-nav-links a,.g-nav-links .g-placeholder{padding:10px 10px;border-radius:13px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:.2s}.g-nav-links a:hover,.g-nav-links a:focus-visible{outline:0;background:rgba(255,255,255,.09);color:#fff}.g-nav-links a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-nav-links .g-placeholder{color:rgba(255,255,255,.48);cursor:default}.g-actions{margin-left:auto;display:flex;align-items:center;gap:7px}.g-auth,.g-cart-btn{height:38px;padding:0 12px;border-radius:12px;font:800 11px "Noto Sans TC",sans-serif;white-space:nowrap;cursor:pointer;transition:.2s}.g-login{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.78)}.g-login:hover{background:rgba(255,255,255,.1);color:#fff}.g-signup{border:1px solid rgba(184,214,198,.68);background:rgba(184,214,198,.91);color:#26382f;box-shadow:inset 0 1px rgba(255,255,255,.5)}.g-signup:hover{background:#d9ebe1;transform:translateY(-1px)}.g-cart-btn{position:relative;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff}.g-cart-btn:hover{background:rgba(255,255,255,.13)}.g-cart-btn #cartBadge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#b8d6c6;color:#26382f;font-size:9px;transform:scale(0);transition:transform .2s}.g-menu-btn{display:none;width:42px;height:42px;margin-left:auto;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}.g-menu-btn span,.g-menu-btn:before,.g-menu-btn:after{content:"";display:block;width:17px;height:1.5px;margin:4px auto;border-radius:2px;background:currentColor;transition:.25s}.g-menu-btn[aria-expanded=true] span{opacity:0}.g-menu-btn[aria-expanded=true]:before{transform:translateY(5.5px) rotate(45deg)}.g-menu-btn[aria-expanded=true]:after{transform:translateY(-5.5px) rotate(-45deg)}.g-mobile-menu{display:none}.g-nav-spacer{height:94px}
+@media(max-width:1180px) and (min-width:921px){.global-nav{width:calc(100% - 20px)}.g-nav-inner{padding-left:12px;gap:8px}.g-brand{min-width:142px}.g-brand img{height:40px;max-width:145px}.g-nav-links a,.g-nav-links .g-placeholder{padding-inline:7px;font-size:11px}.g-auth,.g-cart-btn{padding-inline:9px}}
+@media(max-width:920px){.global-nav{top:10px;width:calc(100% - 20px);border-radius:21px}.g-nav-inner{min-height:60px;padding:0 10px 0 14px}.g-brand{height:44px;min-width:0}.g-brand img{height:39px;max-width:145px}.g-nav-links,.g-actions{display:none}.g-menu-btn{display:block}.g-mobile-menu{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s,opacity .25s}.g-mobile-menu.open{grid-template-rows:1fr;opacity:1}.g-mobile-inner{overflow:hidden}.g-mobile-actions{display:flex;gap:7px;padding:4px 12px 8px}.g-mobile-actions .g-auth,.g-mobile-actions .g-cart-btn{flex:1}.g-mobile-menu nav{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:0 12px 13px}.g-mobile-menu nav a,.g-mobile-menu nav .g-placeholder{padding:12px 13px;border-radius:13px;color:rgba(255,255,255,.72);font-size:12px;font-weight:600;text-decoration:none}.g-mobile-menu nav a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-mobile-menu nav .g-placeholder{color:rgba(255,255,255,.45)}.g-nav-spacer{height:82px}}
+@media(max-width:520px){.g-mobile-menu nav{grid-template-columns:1fr}}</style>
+  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css">
+  <link rel="stylesheet" href="experience-cart.css">
+</head>
+<body class="min-h-screen antialiased flex flex-col">
+
+    <header class="global-nav" id="globalNav"><div class="g-nav-inner"><a class="g-brand" href="index.html" aria-label="桃園偏鄉輕旅行首頁"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a><nav class="g-nav-links" aria-label="主要導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a class="active" href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav><div class="g-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><button class="g-menu-btn" id="globalMenuBtn" type="button" aria-expanded="false" aria-controls="globalMobileMenu" aria-label="開啟選單"><span></span></button></div><div class="g-mobile-menu" id="globalMobileMenu"><div class="g-mobile-inner"><div class="g-mobile-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><nav aria-label="行動版導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a class="active" href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav></div></div></header><div class="g-nav-spacer" aria-hidden="true"></div>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
+        <section class="text-center mb-10 px-4">
+            <h1 class="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">探索桃園全區域的質感體驗</h1>
+            <p class="text-white/70 text-sm md:text-base">從拉拉山水蜜桃採果到在地手作，預約屬於你的美好時光</p>
+        </section>
+
+        <!-- 主題體驗區 -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-black text-white mb-2">想體驗什麼？</h2>
+                <p class="text-white/70 text-sm md:text-base">主題體驗，帶你深度感受桃園在地魅力</p>
+            </div>
+
+            <!-- Desktop Grid -->
+            <div class="hidden lg:grid grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <button onclick="filterByCategory('農事體驗')" class="apple-glass-card p-8 text-center hover-card-up flex flex-col items-center gap-4">
+                    <span class="text-5xl">🌾</span> <span class="font-bold text-xl text-white">農事體驗</span>
+                </button>
+                <button onclick="filterByCategory('手作工藝')" class="apple-glass-card p-8 text-center hover-card-up flex flex-col items-center gap-4">
+                    <span class="text-5xl">🏺</span> <span class="font-bold text-xl text-white">手作工藝</span>
+                </button>
+                <button onclick="filterByCategory('採果體驗')" class="apple-glass-card p-8 text-center hover-card-up flex flex-col items-center gap-4">
+                    <span class="text-5xl">🍓</span> <span class="font-bold text-xl text-white">採果體驗</span>
+                </button>
+            </div>
+
+            <!-- Mobile Carousel -->
+            <div class="lg:hidden flex items-center justify-between gap-4 max-w-[280px] mx-auto px-1">
+                <button onclick="moveSlide(-1)" class="p-2 opacity-70 hover:opacity-100 flex-shrink-0"><div class="w-3 h-4 bg-gray-400 hover:bg-white transition-colors" style="clip-path: polygon(100% 0, 0 50%, 100% 100%);"></div></button>
+                <div class="overflow-hidden flex-1">
+                    <div id="carousel" class="flex transition-transform duration-500">
+                        <div class="w-full flex-shrink-0 px-1"><div onclick="filterByCategory('農事體驗')" class="apple-glass-card py-6 px-3 text-center flex flex-col items-center gap-2 cursor-pointer"><span class="text-4xl">🌾</span> <span class="font-bold text-sm text-white">農事體驗</span></div></div>
+                        <div class="w-full flex-shrink-0 px-1"><div onclick="filterByCategory('手作工藝')" class="apple-glass-card py-6 px-3 text-center flex flex-col items-center gap-2 cursor-pointer"><span class="text-4xl">🏺</span> <span class="font-bold text-sm text-white">手作工藝</span></div></div>
+                        <div class="w-full flex-shrink-0 px-1"><div onclick="filterByCategory('採果體驗')" class="apple-glass-card py-6 px-3 text-center flex flex-col items-center gap-2 cursor-pointer"><span class="text-4xl">🍓</span> <span class="font-bold text-sm text-white">採果體驗</span></div></div>
+                    </div>
+                </div>
+                <button onclick="moveSlide(1)" class="p-2 opacity-70 hover:opacity-100 flex-shrink-0"><div class="w-3 h-4 bg-gray-400 hover:bg-white transition-colors" style="clip-path: polygon(0 0, 100% 50%, 0 100%);"></div></button>
+            </div>
+        </section>
+
+        <!-- 課程區 -->
+        <section id="allCourses">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-black text-white">探索全部體驗</h2>
+                <button onclick="toggleMobileFilter(true)" class="lg:hidden px-4 py-2 bg-white/10 rounded-full text-xs font-bold text-white border border-white/25">篩選與排序 ▾</button>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-start">
+                <aside class="w-full lg:w-72 apple-glass-card p-6 hidden lg:block sticky top-20">
+                    <div class="mb-6 pb-6 border-b border-white/10">
+                        <h4 class="text-sm font-bold text-brand-green mb-3">排序方式</h4>
+                        <div class="relative">
+                            <div class="custom-dropdown-trigger" onclick="toggleDropdown('desktopDropdown')">
+                                <span id="selectedSortDesktop" class="text-sm pr-4">日期：由新到舊</span>
+                                <div class="w-2.5 h-2.5 bg-gray-400" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+                            </div>
+                            <div id="desktopDropdown" class="custom-dropdown-menu hidden">
+                                <div class="custom-dropdown-item" onclick="selectSort('dateDesc', '日期：由新到舊', 'selectedSortDesktop', 'desktopDropdown')">日期：由新到舊</div>
+                                <div class="custom-dropdown-item" onclick="selectSort('popular', '熱門推薦', 'selectedSortDesktop', 'desktopDropdown')">熱門推薦</div>
+                                <div class="custom-dropdown-item" onclick="selectSort('rating', '評分最高', 'selectedSortDesktop', 'desktopDropdown')">評分最高</div>
+                                <div class="custom-dropdown-item" onclick="selectSort('priceAsc', '價格低到高', 'selectedSortDesktop', 'desktopDropdown')">價格低到高</div>
+                                <div class="custom-dropdown-item" onclick="selectSort('priceDesc', '價格高到低', 'selectedSortDesktop', 'desktopDropdown')">價格高到低</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                        <h3 class="font-bold text-white">篩選條件</h3>
+                        <button onclick="resetFilters()" class="text-xs text-white/50 hover:text-brand-green">重設</button>
+                    </div>
+                    <div id="filterContent"></div>
+                </aside>
+
+                <div class="flex-1 w-full">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="coursesGrid"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Filter Modal -->
+    <div id="mobileFilterModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-black text-white">篩選與排序</h3>
+            <button onclick="toggleMobileFilter(false)" class="text-2xl text-white">×</button>
+        </div>
+        <div class="mb-6 pb-6 border-b border-white/10">
+            <h4 class="text-sm font-bold text-brand-green mb-3">排序方式</h4>
+            <div class="relative">
+                <div class="custom-dropdown-trigger" onclick="toggleDropdown('mobileDropdown')">
+                    <span id="selectedSortMobile" class="text-sm pr-4">日期：由新到舊</span>
+                    <div class="w-2.5 h-2.5 bg-gray-400" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+                </div>
+                <div id="mobileDropdown" class="custom-dropdown-menu hidden">
+                    <div class="custom-dropdown-item" onclick="selectSort('dateDesc', '日期：由新到舊', 'selectedSortMobile', 'mobileDropdown')">日期：由新到舊</div>
+                    <div class="custom-dropdown-item" onclick="selectSort('popular', '熱門推薦', 'selectedSortMobile', 'mobileDropdown')">熱門推薦</div>
+                    <div class="custom-dropdown-item" onclick="selectSort('rating', '評分最高', 'selectedSortMobile', 'mobileDropdown')">評分最高</div>
+                    <div class="custom-dropdown-item" onclick="selectSort('priceAsc', '價格低到高', 'selectedSortMobile', 'mobileDropdown')">價格低到高</div>
+                    <div class="custom-dropdown-item" onclick="selectSort('priceDesc', '價格高到低', 'selectedSortMobile', 'mobileDropdown')">價格高到低</div>
+                </div>
+            </div>
+        </div>
+        <div id="mobileFilterContent" class="space-y-6"></div>
+        <button onclick="toggleMobileFilter(false)" class="w-full mt-8 py-4 apple-glass-btn-green">查看結果</button>
+    </div>
+
+    <script>
+        let currentIdx = 0;
+        function moveSlide(dir) { const c = document.getElementById('carousel'); currentIdx = (currentIdx + dir + 3) % 3; c.style.transform = `translateX(-${currentIdx * 100}%)`; }
+        setInterval(() => moveSlide(1), 3500);
+
+        const courses = [
+            { id: 9, title: "拉拉山水蜜桃採果課程體驗", category: "採果體驗", city: "復興區", date: "2026/08/20", price: 780, rating: 5.0, reviewCount: 310, badge: "最新上線", img: "https://images.unsplash.com/photo-1528821154947-19c2c77c3a6a?w=800&q=80" },
+            { id: 1, title: "一日小農｜田野插秧與稻作農事體驗", category: "農事體驗", city: "桃園區", date: "2026/08/18", price: 550, rating: 4.9, reviewCount: 128, badge: "熱門推薦", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&q=80" },
+            { id: 2, title: "中壢老街手作｜竹編藝術與傳統工藝課", category: "手作工藝", city: "中壢區", date: "2026/08/15", price: 750, rating: 4.8, reviewCount: 96, badge: "職人教學", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80" },
+            { id: 3, title: "季節限定｜中壢有機溫室草莓採果樂", category: "採果體驗", city: "中壢區", date: "2026/08/12", price: 480, rating: 4.9, reviewCount: 210, badge: "季節限定", img: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=800&q=80" },
+            { id: 4, title: "城市綠手指｜香草植栽組合與農事體驗", category: "農事體驗", city: "桃園區", date: "2026/08/10", price: 620, rating: 4.7, reviewCount: 84, badge: "療癒推薦", img: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80" }
+        ];
+
+        let currentSort = 'dateDesc';
+        function toggleDropdown(menuId) { document.getElementById(menuId).classList.toggle('hidden'); }
+        function selectSort(val, text, labelId, menuId) { 
+            currentSort = val; 
+            document.getElementById('selectedSortDesktop').innerText = text;
+            if(document.getElementById('selectedSortMobile')) document.getElementById('selectedSortMobile').innerText = text;
+            document.getElementById(menuId).classList.add('hidden'); 
+            filterAndRender(); 
+        }
+        
+        function renderFilters() {
+            const taoyuanDistricts = ['全部區域', '桃園區', '中壢區', '平鎮區', '八德區', '楊梅區', '蘆竹區', '大溪區', '龜山區', '龍潭區', '大園區', '觀音區', '新屋區', '復興區'];
+            const content = `<div><h4 class="text-sm font-bold text-brand-green mb-3">體驗類型</h4><div class="space-y-2">${['農事體驗', '手作工藝', '採果體驗'].map(cat => `<label class="flex items-center gap-2 text-sm text-white/80 cursor-pointer"><input type="checkbox" value="${cat}" data-filter-kind="category" class="accent-brand-green filter-checkbox" onchange="filterAndRender()"> ${cat}</label>`).join('')}</div></div><div class="mt-6"><h4 class="text-sm font-bold text-brand-green mb-3">桃園區域</h4><div class="space-y-2">${taoyuanDistricts.map(city => `<label class="flex items-center gap-2 text-xs text-white/80 cursor-pointer"><input type="checkbox" value="${city}" data-filter-kind="district" class="accent-brand-green filter-checkbox" onchange="filterAndRender()"> ${city}</label>`).join('')}</div></div>`;
+            document.getElementById('filterContent').innerHTML = content;
+            document.getElementById('mobileFilterContent').innerHTML = content;
+        }
+
+        function filterAndRender() {
+            const categories = [...new Set(Array.from(document.querySelectorAll('[data-filter-kind="category"]:checked')).map(el => el.value))];
+            const districts = [...new Set(Array.from(document.querySelectorAll('[data-filter-kind="district"]:checked')).map(el => el.value))];
+            const showAllDistricts = districts.length === 0 || districts.includes('全部區域');
+            let filtered = courses.filter(c =>
+                (categories.length === 0 || categories.includes(c.category)) &&
+                (showAllDistricts || districts.includes(c.city))
+            );
+            
+            if (currentSort === 'dateDesc') filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
+            else if (currentSort === 'popular') filtered.sort((a,b) => b.reviewCount - a.reviewCount);
+            else if (currentSort === 'rating') filtered.sort((a,b) => b.rating - a.rating);
+            else if (currentSort === 'priceAsc') filtered.sort((a,b) => a.price - b.price);
+            else if (currentSort === 'priceDesc') filtered.sort((a,b) => b.price - a.price);
+
+            document.getElementById('coursesGrid').innerHTML = filtered.map(c => `
+                <div class="apple-glass-card overflow-hidden group p-2 cursor-pointer" role="link" tabindex="0" aria-label="查看 ${c.title} 詳情" onclick="openCourseDetail(${c.id})" onkeydown="if(event.key === 'Enter' || event.key === ' ') openCourseDetail(${c.id})">
+                    <div class="relative aspect-[4/3] rounded-2xl overflow-hidden mb-3">
+                        <img src="${c.img}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&q=80'">
+                        <div class="absolute top-3 left-3 bg-black/60 px-3 py-1 rounded-full text-[10px] text-brand-green border border-white/10">${c.badge}</div>
+                    </div>
+                    <div class="p-2">
+                        <p class="text-[10px] font-bold text-brand-green">${c.category}・${c.city}</p>
+                        <h3 class="font-bold text-sm text-white my-1">${c.title}</h3>
+                        <div class="flex items-center gap-1 mb-2">
+                             <span class="text-xs text-amber-400 font-bold">⭐ ${c.rating}</span>
+                             <span class="text-[10px] text-white/50">(${c.reviewCount}則評價)</span>
+                        </div>
+                        <p class="text-[10px] text-white/50 mb-3">📅 梯次：${c.date}</p>
+                        <div class="flex justify-between items-center gap-3 pt-3 border-t border-white/10"><span class="text-lg font-black text-brand-green">$${c.price}</span><div class="flex items-center gap-2"><button type="button" class="favorite-btn" data-favorite-id="${c.id}" aria-label="收藏 ${c.title}" aria-pressed="false" onclick="event.stopPropagation(); toggleFavorite(${c.id}, this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/></svg></button><button type="button" onclick="event.stopPropagation(); openCourseDetail(${c.id})" class="px-4 py-1.5 apple-glass-btn-green text-[11px]">查看詳情</button></div></div>
+                    </div>
+                </div>
+            `).join('');
+            applyFavoriteStates();
+        }
+        const experienceFavoritesKey = 'experienceFavorites';
+        function getExperienceFavorites() {
+            try { return JSON.parse(localStorage.getItem(experienceFavoritesKey) || '[]').map(Number); }
+            catch { return []; }
+        }
+        function applyFavoriteStates() {
+            const favorites = new Set(getExperienceFavorites());
+            document.querySelectorAll('[data-favorite-id]').forEach(button => {
+                const isFavorite = favorites.has(Number(button.dataset.favoriteId));
+                button.classList.toggle('is-favorite', isFavorite);
+                button.setAttribute('aria-pressed', String(isFavorite));
+            });
+        }
+        function toggleFavorite(id, button) {
+            const favorites = new Set(getExperienceFavorites());
+            favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+            localStorage.setItem(experienceFavoritesKey, JSON.stringify([...favorites]));
+            applyFavoriteStates();
+            button.animate([{ transform: 'scale(.86)' }, { transform: 'scale(1.14)' }, { transform: 'scale(1)' }], { duration: 260, easing: 'ease-out' });
+        }        function openCourseDetail(id) { location.href = `體驗活動詳情.html?id=${id}`; }
+        function filterByCategory(cat) { document.querySelectorAll('.filter-checkbox').forEach(el => el.checked = (el.value === cat)); filterAndRender(); document.getElementById('allCourses').scrollIntoView({ behavior: 'smooth' }); }
+        function toggleMobileFilter(show) { document.getElementById('mobileFilterModal').classList.toggle('hidden', !show); }
+        function resetFilters() { document.querySelectorAll('.filter-checkbox').forEach(el => el.checked = false); filterAndRender(); }
+        document.addEventListener('DOMContentLoaded', () => { renderFilters(); filterAndRender(); });
+    </script>
+<script>
+(()=>{const nav=document.getElementById("globalNav"),button=document.getElementById("globalMenuBtn"),menu=document.getElementById("globalMobileMenu");if(!nav||!button||!menu)return;const close=()=>{menu.classList.remove("open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","開啟選單")};button.addEventListener("click",()=>{const open=button.getAttribute("aria-expanded")==="true";menu.classList.toggle("open",!open);button.setAttribute("aria-expanded",String(!open));button.setAttribute("aria-label",open?"開啟選單":"關閉選單")});menu.querySelectorAll("a").forEach(link=>link.addEventListener("click",close));window.addEventListener("resize",()=>{if(innerWidth>920)close()});window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>24),{passive:true})})();
+</script><script src="experience-cart.js"></script><script src="site-auth.js"></script></body>
+</html>
+
+
+
+
+
+
+

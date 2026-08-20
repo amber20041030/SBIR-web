@@ -1,0 +1,101 @@
+/* Shared responsive safety layer for every public page. */
+html,body{max-width:100%;overflow-x:hidden;overflow-x:clip}img,video,canvas,svg{max-width:100%}main,section,article,aside,nav,header,footer,form,fieldset,div{min-width:0}input,select,textarea,button{max-width:100%}.overflow-x-auto{max-width:100%;-webkit-overflow-scrolling:touch}
+
+@media(max-width:920px){
+  .global-nav,.site-nav{width:calc(100% - 20px)!important;max-width:calc(100% - 20px)}
+  .g-nav-inner,.nav-inner{min-width:0}
+  .g-mobile-inner,.mobile-menu>div{max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+  .g-mobile-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}
+  .g-mobile-actions>*{width:100%;min-width:0}
+  .g-mobile-actions .g-cart-btn,.g-mobile-actions .site-member-link{grid-column:1/-1}
+  .member-shell{grid-template-columns:minmax(0,1fr)!important}
+  .member-sidebar{position:static!important;top:auto!important}
+  .member-content{width:100%}
+}
+
+@media(max-width:720px){
+  .auth-page{min-height:100dvh!important;padding:68px 14px 20px!important;display:block!important;overflow:visible!important}
+  .auth-card{width:100%!important;min-height:calc(100dvh - 88px)!important;padding:24px 20px 28px!important;border-radius:27px!important}
+  .auth-back{top:12px!important;left:12px!important;width:44px!important;height:44px!important}
+  .view-header h1,.center-state h1{font-size:clamp(25px,8vw,31px)!important}
+  .view-header p,.center-state p{font-size:12px!important}
+  .form-stack,.form-stack.compact{gap:13px!important}
+  .phone-verify-row,.inline-send{grid-template-columns:minmax(0,1fr)!important}
+  .phone-verify-row .send-code,.phone-verify-row .otp-input,.inline-send .send-code{grid-column:1!important;width:100%!important}
+  .social-grid{grid-template-columns:minmax(0,1fr)!important}
+  .social-btn{width:100%;min-height:48px}
+  .divider{gap:10px!important}
+  .modal-backdrop{padding:12px!important;align-items:center!important}
+  .glass-modal{width:100%!important;max-height:calc(100dvh - 24px)!important;padding:25px 18px!important;border-radius:22px!important}
+  .modal-actions{grid-template-columns:minmax(0,1fr)!important}
+  .toast-region{top:10px!important;right:10px!important;width:calc(100% - 20px)!important}
+
+  .member-header{height:66px!important;padding-inline:14px!important}
+  .member-shell{width:calc(100% - 20px)!important;margin:10px auto 24px!important;gap:10px!important}
+  .member-sidebar{padding:14px!important;border-radius:20px!important}
+  .member-nav{display:flex!important;overflow-x:auto!important;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:3px}
+  .member-nav::-webkit-scrollbar{display:none}
+  .member-nav button{min-width:max-content!important;scroll-snap-align:start}
+  .sidebar-logout{width:100%!important;flex:0 0 auto}
+  .member-content{min-height:0!important;padding:20px 14px!important;border-radius:22px!important}
+  .unified-profile-card,.settings-card{padding:18px!important}
+  .avatar-editor{align-items:center!important;flex-wrap:wrap}
+  .profile-avatar{width:72px!important;height:72px!important;flex-basis:72px!important}
+  .unified-profile-card .send-code,.inline-verification .primary-action,.unified-save,.password-section .primary-action{width:100%!important}
+  .form-grid,.security-grid{grid-template-columns:minmax(0,1fr)!important}
+  .field.full{grid-column:1!important}
+  .section-heading{min-height:0!important;margin-bottom:18px!important;flex-direction:column}
+  .section-heading.with-action{align-items:stretch!important}
+  .section-heading.with-action .primary-action{width:100%!important}
+  .empty-state{min-height:330px!important;padding:24px 16px!important}
+  .address-item{grid-template-columns:minmax(0,1fr)!important}
+  .notification-list{padding-inline:14px!important}
+}
+
+@media(max-width:480px){
+  input,select,textarea{font-size:16px!important}
+  .auth-card{padding-inline:15px!important;border-radius:23px!important}
+  .auth-logo{width:62px!important;height:62px!important}
+  .segmented{width:100%!important}
+  .primary-btn,.secondary-btn,.social-btn{min-height:50px!important;height:auto!important;padding-block:12px}
+  .terms-check{font-size:10px!important}
+  .divider{font-size:9px!important}
+  .glass-modal{padding:22px 15px!important}
+
+  .member-brand img,.g-brand img,.brand-logo{max-width:140px!important;height:auto!important;max-height:40px!important}
+  .member-summary{align-items:center}
+  .member-summary>div:last-child{max-width:calc(100% - 60px)}
+  .binding-list>div{grid-template-columns:minmax(0,1fr) auto!important;gap:5px 10px!important;padding:10px!important}
+  .binding-list>div>small{grid-column:1;grid-row:2}
+  .binding-list>div>button{grid-column:2;grid-row:1/3;min-width:74px!important;padding-inline:10px!important}
+  .profile-row{padding-bottom:18px!important;margin-bottom:18px!important}
+  .field label{align-items:flex-start!important;flex-wrap:wrap}
+  .verified-chip,.locked-label{margin-left:0!important}
+  .security-item{grid-template-columns:38px minmax(0,1fr)!important}
+  .security-item>b{grid-column:2!important}
+  .notification-list label{gap:12px!important}
+  .notification-list label>div{padding-block:8px}
+  .form-actions{display:grid!important;grid-template-columns:minmax(0,1fr)!important}
+  .form-actions>*{width:100%!important}
+
+  .g-mobile-actions{grid-template-columns:minmax(0,1fr)!important}
+  .g-mobile-actions>*{grid-column:1!important}
+  .g-mobile-menu nav,.mobile-menu nav{grid-template-columns:minmax(0,1fr)!important}
+  .mobile-tools{grid-template-columns:minmax(0,1fr)!important}
+  .mobile-auth{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .mobile-auth .site-member-link{grid-column:1/-1}
+  .container{width:calc(100% - 28px)!important}
+  .hero-benefits{max-width:100%;gap:8px 10px!important}
+  .stats{grid-template-columns:minmax(0,1fr)!important}
+  .stats .stat{grid-column:1!important;border-right:0!important}
+}
+
+@media(max-width:340px){
+  .auth-page{padding-inline:8px!important}.auth-card{padding-inline:12px!important}
+  .member-shell{width:calc(100% - 12px)!important}.member-content{padding-inline:10px!important}.unified-profile-card,.settings-card{padding-inline:13px!important}
+  .binding-list>div{grid-template-columns:minmax(0,1fr)!important}.binding-list>div>small,.binding-list>div>button{grid-column:1!important;grid-row:auto!important}.binding-list>div>button{width:100%!important}
+}
+
+@media(orientation:landscape) and (max-height:520px){
+  .auth-page{padding-top:58px!important}.auth-card{min-height:auto!important}.glass-modal{max-height:calc(100dvh - 16px)!important}
+}

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智慧推薦系統 - 桃園偏鄉輕旅行</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#B8D6C6',      /* 指定的專屬綠色 13-6008 TCX */
+                        'brand-dark': '#3B352F',       /* 指定的深色字體 */
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-image: 
+                linear-gradient(rgba(15, 25, 20, 0.75), rgba(15, 25, 20, 0.9)), 
+                url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff; /* 全站預設白字 */
+        }
+
+        /* --- Apple 風格深色毛玻璃設計 --- */
+        
+        .apple-glass-card {
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(30px) saturate(120%);
+            -webkit-backdrop-filter: blur(30px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 32px;
+            box-shadow: 
+                0 24px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .apple-glass-nav {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .apple-glass-input {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: #ffffff;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .apple-glass-input:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(184, 214, 198, 0.6); 
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(184, 214, 198, 0.3);
+            outline: none;
+        }
+
+        /* 按鈕 (套用您指定的綠色 #B8D6C6 / rgba(184,214,198)) */
+        .apple-glass-btn-green {
+            background: rgba(184, 214, 198, 0.6); 
+            backdrop-filter: blur(25px) saturate(130%);
+            -webkit-backdrop-filter: blur(25px) saturate(130%);
+            border: 1px solid rgba(184, 214, 198, 0.8);
+            border-radius: 20px;
+            color: #3B352F; /* 深色文字增加可讀性 */
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, background 0.2s;
+        }
+        .apple-glass-btn-green:hover {
+            transform: translateY(-2px) scale(1.01);
+            background: rgba(184, 214, 198, 0.8);
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        /* 聊天氣泡 (使用者 - 預設白色半透明) */
+        .apple-glass-bubble-user {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(130%);
+            -webkit-backdrop-filter: blur(25px) saturate(130%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            border-radius: 24px 24px 4px 24px;
+        }
+
+        /* 聊天氣泡 (AI - 套用您指定的綠色 #B8D6C6) */
+        .apple-glass-bubble-ai {
+            background: rgba(184, 214, 198, 0.25);
+            backdrop-filter: blur(25px) saturate(120%);
+            -webkit-backdrop-filter: blur(25px) saturate(120%);
+            border: 1px solid rgba(184, 214, 198, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            border-radius: 24px 24px 24px 4px;
+        }
+
+        /* 動畫 */
+        .chat-bubble {
+            animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .typing-dot { animation: typing 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 隱藏捲軸 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .ai-history-button,.ai-save-login{min-height:40px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(184,214,198,.48);border-radius:14px;background:rgba(184,214,198,.14);color:#d9ebe1;font-size:12px;font-weight:700;cursor:pointer;transition:.2s;white-space:nowrap}
+        .ai-history-button:hover,.ai-save-login:hover{background:rgba(184,214,198,.24);border-color:rgba(184,214,198,.7);transform:translateY(-1px)}
+        .ai-save-login{margin-top:14px;background:rgba(217,235,225,.9);color:#26382f;border-color:rgba(255,255,255,.55)}
+        .ai-history-backdrop{position:fixed;z-index:90;inset:0;padding:24px;display:grid;place-items:center;background:rgba(2,8,5,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+        .ai-history-backdrop[hidden]{display:none}
+        .ai-history-panel{width:min(560px,100%);max-height:min(680px,calc(100vh - 48px));padding:24px;overflow:auto;border:1px solid rgba(255,255,255,.16);border-radius:28px;background:rgba(12,25,17,.88);box-shadow:0 28px 80px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.1);backdrop-filter:blur(34px) saturate(150%);-webkit-backdrop-filter:blur(34px) saturate(150%)}
+        .ai-history-head{margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.ai-history-head h2{margin:0;font-size:22px;font-weight:700}.ai-history-close{width:38px;height:38px;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(255,255,255,.07);color:#fff;font-size:20px;cursor:pointer}
+        .ai-history-list{display:grid;gap:10px}.ai-history-item{width:100%;padding:15px 16px;border:1px solid rgba(255,255,255,.12);border-radius:17px;background:rgba(255,255,255,.055);color:#fff;text-align:left;cursor:pointer;transition:.2s}.ai-history-item:hover{border-color:rgba(184,214,198,.45);background:rgba(184,214,198,.1)}.ai-history-item strong,.ai-history-item span{display:block}.ai-history-item strong{font-size:14px}.ai-history-item span{margin-top:5px;color:rgba(255,255,255,.56);font-size:11px}.ai-history-empty{padding:36px 16px;color:rgba(255,255,255,.58);text-align:center}
+        @media(max-width:560px){.ai-history-button{padding:0 11px;font-size:11px}.ai-history-backdrop{padding:12px}.ai-history-panel{padding:19px;border-radius:22px}}
+    /* Shared Apple-style floating navigation */
+.global-nav{position:fixed;z-index:40;top:16px;left:50%;width:min(1440px,calc(100% - 32px));transform:translateX(-50%);border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(12,22,17,.62);box-shadow:0 14px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(30px) saturate(165%);-webkit-backdrop-filter:blur(30px) saturate(165%);transition:top .25s,background .25s,box-shadow .25s}.global-nav.scrolled{top:10px;background:rgba(10,18,14,.88);box-shadow:0 18px 55px rgba(0,0,0,.36)}.g-nav-inner{position:relative;min-height:68px;padding:0 13px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}.g-brand{height:52px;min-width:174px;display:flex;align-items:center;text-decoration:none}.g-brand img{display:block;width:auto;height:46px;max-width:180px;object-fit:contain;filter:drop-shadow(0 2px 7px rgba(0,0,0,.32))}.g-nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:1px;white-space:nowrap}.g-nav-links a,.g-nav-links .g-placeholder{padding:10px 10px;border-radius:13px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-decoration:none;transition:.2s}.g-nav-links a:hover,.g-nav-links a:focus-visible{outline:0;background:rgba(255,255,255,.09);color:#fff}.g-nav-links a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-nav-links .g-placeholder{color:rgba(255,255,255,.48);cursor:default}.g-actions{margin-left:auto;display:flex;align-items:center;gap:7px}.g-auth,.g-cart-btn{height:38px;padding:0 12px;border-radius:12px;font:800 11px "Noto Sans TC",sans-serif;white-space:nowrap;cursor:pointer;transition:.2s}.g-login{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:rgba(255,255,255,.78)}.g-login:hover{background:rgba(255,255,255,.1);color:#fff}.g-signup{border:1px solid rgba(184,214,198,.68);background:rgba(184,214,198,.91);color:#26382f;box-shadow:inset 0 1px rgba(255,255,255,.5)}.g-signup:hover{background:#d9ebe1;transform:translateY(-1px)}.g-cart-btn{position:relative;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff}.g-cart-btn:hover{background:rgba(255,255,255,.13)}.g-cart-btn #cartBadge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#b8d6c6;color:#26382f;font-size:9px;transform:scale(0);transition:transform .2s}.g-menu-btn{display:none;width:42px;height:42px;margin-left:auto;padding:0;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}.g-menu-btn span,.g-menu-btn:before,.g-menu-btn:after{content:"";display:block;width:17px;height:1.5px;margin:4px auto;border-radius:2px;background:currentColor;transition:.25s}.g-menu-btn[aria-expanded=true] span{opacity:0}.g-menu-btn[aria-expanded=true]:before{transform:translateY(5.5px) rotate(45deg)}.g-menu-btn[aria-expanded=true]:after{transform:translateY(-5.5px) rotate(-45deg)}.g-mobile-menu{display:none}.g-nav-spacer{height:94px}
+@media(max-width:1180px) and (min-width:921px){.global-nav{width:calc(100% - 20px)}.g-nav-inner{padding-left:12px;gap:8px}.g-brand{min-width:142px}.g-brand img{height:40px;max-width:145px}.g-nav-links a,.g-nav-links .g-placeholder{padding-inline:7px;font-size:11px}.g-auth,.g-cart-btn{padding-inline:9px}}
+@media(max-width:920px){.global-nav{top:10px;width:calc(100% - 20px);border-radius:21px}.g-nav-inner{min-height:60px;padding:0 10px 0 14px}.g-brand{height:44px;min-width:0}.g-brand img{height:39px;max-width:145px}.g-nav-links,.g-actions{display:none}.g-menu-btn{display:block}.g-mobile-menu{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s,opacity .25s}.g-mobile-menu.open{grid-template-rows:1fr;opacity:1}.g-mobile-inner{overflow:hidden}.g-mobile-actions{display:flex;gap:7px;padding:4px 12px 8px}.g-mobile-actions .g-auth,.g-mobile-actions .g-cart-btn{flex:1}.g-mobile-menu nav{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:0 12px 13px}.g-mobile-menu nav a,.g-mobile-menu nav .g-placeholder{padding:12px 13px;border-radius:13px;color:rgba(255,255,255,.72);font-size:12px;font-weight:600;text-decoration:none}.g-mobile-menu nav a.active{background:rgba(184,214,198,.14);color:#d9ebe1}.g-mobile-menu nav .g-placeholder{color:rgba(255,255,255,.45)}.g-nav-spacer{height:82px}}
+@media(max-width:520px){.g-mobile-menu nav{grid-template-columns:1fr}}</style>
+  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css">
+</head>
+<body class="min-h-screen pb-16 antialiased">
+
+    <!-- 頂部導覽列 -->
+    <header class="global-nav" id="globalNav"><div class="g-nav-inner"><a class="g-brand" href="index.html" aria-label="桃園偏鄉輕旅行首頁"><img src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a><nav class="g-nav-links" aria-label="主要導覽"><a class="active" href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav><div class="g-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><button class="g-menu-btn" id="globalMenuBtn" type="button" aria-expanded="false" aria-controls="globalMobileMenu" aria-label="開啟選單"><span></span></button></div><div class="g-mobile-menu" id="globalMobileMenu"><div class="g-mobile-inner"><div class="g-mobile-actions"><button class="g-auth g-login" type="button">登入</button><button class="g-auth g-signup" type="button">註冊</button></div><nav aria-label="行動版導覽"><a class="active" href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a href="最新消息.html">最新消息</a></nav></div></div></header><div class="g-nav-spacer" aria-hidden="true"></div>
+
+    <main class="max-w-3xl mx-auto px-4 mt-10">
+        <!-- 標題區 -->
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight drop-shadow-lg text-white">探索專屬您的偏鄉秘境</h1>
+            <p class="font-medium text-white/80 text-lg drop-shadow-md">告訴我您的想法，AI 嚮導將為您量身打造完美的旅程</p>
+        </div>
+
+        <!-- 需求調查輸入表單 -->
+        <div id="surveyContainer" class="apple-glass-card p-6 md:p-10 transition-all duration-500 relative overflow-hidden">
+            <form id="travelForm" class="space-y-7 relative z-10">
+                
+                <!-- 輸入題 1 -->
+                <div>
+                    <label for="region" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">1</span>
+                        你想去哪個區域？
+                    </label>
+                    <input type="text" id="region" name="region" placeholder="例如：復興區、龍潭區、大溪區，或交給 AI 推薦..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 2：保留原第 1 題 -->
+                <div>
+                    <label for="style" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">2</span>
+                        您偏好的旅遊風格是？
+                    </label>
+                    <input type="text" id="style" name="style" placeholder="例如：走入大自然、文化深度體驗、農事手作..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 3 -->
+                <div>
+                    <label for="duration" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">3</span>
+                        預計的旅行時間？
+                    </label>
+                    <input type="text" id="duration" name="duration" placeholder="例如：週六半日遊、三天兩夜放鬆行..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 4 -->
+                <div>
+                    <label for="companion" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">4</span>
+                        同行的人數與對象？
+                    </label>
+                    <input type="text" id="companion" name="companion" placeholder="例如：自己一個人探索、兩大兩小、情侶約會..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 5 -->
+                <div>
+                    <label for="pace" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">5</span>
+                        你希望行程多緊湊？
+                    </label>
+                    <input type="text" id="pace" name="pace" placeholder="例如：悠閒慢遊、適中，或景點豐富的緊湊行程..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 6 -->
+                <div>
+                    <label for="transport" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">6</span>
+                        主要交通方式？
+                    </label>
+                    <input type="text" id="transport" name="transport" placeholder="例如：自行開車、大眾運輸、機車，或以步行為主..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 7 -->
+                <div>
+                    <label for="budget" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">7</span>
+                        每人預算大約多少？
+                    </label>
+                    <input type="text" id="budget" name="budget" placeholder="例如：每人 1,500 元以內（不含住宿）..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 8 -->
+                <div>
+                    <label for="mustVisit" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">8</span>
+                        有沒有一定想去的地方？
+                    </label>
+                    <input type="text" id="mustVisit" name="mustVisit" placeholder="例如：拉拉山、角板山、石門水庫；沒有也可以填「無」..." class="w-full px-5 py-4 apple-glass-input placeholder-white/40">
+                </div>
+
+                <!-- 輸入題 9：保留原第 4 題 -->
+                <div>
+                    <label for="details" class="block text-base font-bold mb-3 flex items-center gap-3 text-white">
+                        <span class="bg-brand-green text-brand-dark w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md">9</span>
+                        請詳細描述你的需求
+                    </label>
+                    <textarea id="details" name="details" rows="3" placeholder="有沒有不吃的食物？需不需要考慮無障礙設施？或是特別想買的農特產品？" class="w-full px-5 py-4 apple-glass-input placeholder-white/40 resize-none"></textarea>
+                </div>
+                <div class="pt-4">
+                    <!-- 指定綠色的毛玻璃按鈕 -->
+                    <button type="submit" class="w-full apple-glass-btn-green text-lg font-bold py-4 px-6 flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>送出需求，開始規劃</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- AI 機器人對話區 -->
+        <div id="chatContainer" class="hidden mt-10 apple-glass-card overflow-hidden flex flex-col h-[650px]">
+            <!-- 聊天室頭部 -->
+            <div class="apple-glass-nav border-b border-white/10 p-5 flex items-center gap-4 z-10">
+                <img src="../imgs/ai.png" alt="AI 智慧推薦助理" class="w-12 h-12 rounded-full object-cover flex-shrink-0 border border-white/30 shadow-inner">
+                <div>
+                    <h3 class="font-bold text-lg tracking-wide text-white">桃園偏鄉旅遊 AI 嚮導</h3>
+                    <p class="text-brand-green text-xs font-medium mt-0.5 opacity-90">即時為您量身打造路線</p>
+                </div>
+                <button class="ai-history-button ml-auto" id="aiHistoryButton" type="button" hidden aria-haspopup="dialog">歷史紀錄</button>
+            </div>
+
+            <!-- 對話內容區 -->
+            <div id="chatBox" class="flex-1 p-5 md:p-8 overflow-y-auto space-y-6 scroll-smooth no-scrollbar">
+                <!-- 動態生成區 -->
+            </div>
+        </div>
+
+        <div class="ai-history-backdrop" id="aiHistoryBackdrop" hidden>
+            <section class="ai-history-panel" role="dialog" aria-modal="true" aria-labelledby="aiHistoryTitle">
+                <div class="ai-history-head"><h2 id="aiHistoryTitle">對話歷史紀錄</h2><button class="ai-history-close" id="aiHistoryClose" type="button" aria-label="關閉歷史紀錄">×</button></div>
+                <div class="ai-history-list" id="aiHistoryList"></div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+    (() => {
+        const SESSION_KEY = 'sbir_current_user';
+        const RETURN_KEY = 'sbir_auth_return_to';
+        const HISTORY_KEY = 'sbir_ai_conversations_v1';
+        const PENDING_KEY = 'sbir_ai_pending_conversation';
+        const currentEmail = localStorage.getItem(SESSION_KEY)?.toLowerCase() || '';
+        const form = document.getElementById('travelForm');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatBox = document.getElementById('chatBox');
+        const historyButton = document.getElementById('aiHistoryButton');
+        const historyBackdrop = document.getElementById('aiHistoryBackdrop');
+        const historyList = document.getElementById('aiHistoryList');
+        const escapeHTML = value => String(value || '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+
+        function readHistoryStore() {
+            try {
+                const value = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}');
+                return value && typeof value === 'object' ? value : {};
+            } catch (_) { return {}; }
+        }
+
+        function getHistory() {
+            if (!currentEmail) return [];
+            const records = readHistoryStore()[currentEmail];
+            return Array.isArray(records) ? records : [];
+        }
+
+        function saveConversation(record) {
+            if (!currentEmail) return;
+            const store = readHistoryStore();
+            const records = Array.isArray(store[currentEmail]) ? store[currentEmail] : [];
+            if (!records.some(item => item.id === record.id)) records.push(record);
+            store[currentEmail] = records.slice(-30);
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(store));
+            historyButton.hidden = false;
+        }
+
+        function safeAnswers(record) {
+            return Object.fromEntries(Object.entries(record.answers || {}).map(([key, value]) => [key, escapeHTML(value)]));
+        }
+
+        function userMessageHTML(record) {
+            const answers = safeAnswers(record);
+            return `<div class="flex justify-end chat-bubble">
+                <div class="apple-glass-bubble-user text-white p-4 px-5 max-w-[85%]">
+                    <div class="leading-relaxed text-sm md:text-base"><div class="space-y-1">
+                        <p>嗨！我想去桃園偏鄉走走，這是我的需求：</p>
+                        <ul class="list-disc list-inside ml-1 mt-2 font-medium opacity-90 space-y-1">
+                            <li>區域：<span class="font-bold text-brand-green">${answers.region || '未指定'}</span></li>
+                            <li>旅遊風格：<span class="font-bold text-brand-green">${answers.style || '未指定'}</span></li>
+                            <li>時間：<span class="font-bold text-brand-green">${answers.duration || '未指定'}</span></li>
+                            <li>對象：<span class="font-bold text-brand-green">${answers.companion || '未指定'}</span></li>
+                            <li>行程節奏：<span class="font-bold text-brand-green">${answers.pace || '未指定'}</span></li>
+                            <li>交通方式：<span class="font-bold text-brand-green">${answers.transport || '未指定'}</span></li>
+                            <li>每人預算：<span class="font-bold text-brand-green">${answers.budget || '未指定'}</span></li>
+                            <li>必去地點：<span class="font-bold text-brand-green">${answers.mustVisit || '未指定'}</span></li>
+                            ${answers.details ? `<li>詳細需求：<span class="font-bold text-brand-green">${answers.details}</span></li>` : ''}
+                        </ul>
+                        <p class="mt-2">請幫我推薦適合的行程！</p>
+                    </div></div>
+                </div>
+            </div>`;
+        }
+
+        function aiMessageHTML(record, showLoginButton = false) {
+            const answers = safeAnswers(record);
+            return `<div class="flex gap-4 chat-bubble max-w-[90%]">
+                <img src="../imgs/ai.png" alt="AI 智慧推薦助理" class="w-10 h-10 rounded-full object-cover flex-shrink-0 mt-1 shadow-md border border-brand-green/40">
+                <div class="apple-glass-bubble-ai text-white p-4 px-5">
+                    <p class="mb-0 font-medium leading-relaxed">收到您的需求！我會依照前往 ${answers.region || '桃園偏鄉'} 的時間、交通、預算與行程節奏，為您規劃專屬的 ${answers.duration || '彈性時段'} 推薦行程。</p>
+                    ${showLoginButton ? '<button class="ai-save-login" type="button" data-save-ai-chat>登入帳號，儲存對話</button>' : ''}
+                </div>
+            </div>`;
+        }
+
+        function showConversation(record) {
+            chatContainer.classList.remove('hidden');
+            chatBox.innerHTML = userMessageHTML(record) + aiMessageHTML(record, false);
+            requestAnimationFrame(() => chatBox.scrollTo({ top: chatBox.scrollHeight }));
+        }
+
+        function openHistory() {
+            const records = [...getHistory()].reverse();
+            historyList.replaceChildren();
+            if (!records.length) {
+                const empty = document.createElement('p');
+                empty.className = 'ai-history-empty';
+                empty.textContent = '目前沒有已儲存的對話';
+                historyList.append(empty);
+            } else {
+                records.forEach(record => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'ai-history-item';
+                    const title = document.createElement('strong');
+                    const meta = document.createElement('span');
+                    title.textContent = `${record.answers?.region || '未指定區域'}・${record.answers?.duration || '彈性時段'}`;
+                    meta.textContent = new Intl.DateTimeFormat('zh-TW', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(record.createdAt));
+                    button.append(title, meta);
+                    button.addEventListener('click', () => { showConversation(record); closeHistory(); });
+                    historyList.append(button);
+                });
+            }
+            historyBackdrop.hidden = false;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHistory() {
+            historyBackdrop.hidden = true;
+            document.body.style.overflow = '';
+        }
+
+        historyButton.addEventListener('click', openHistory);
+        document.getElementById('aiHistoryClose').addEventListener('click', closeHistory);
+        historyBackdrop.addEventListener('click', event => { if (event.target === historyBackdrop) closeHistory(); });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape' && !historyBackdrop.hidden) closeHistory(); });
+
+        chatBox.addEventListener('click', event => {
+            if (!event.target.closest('[data-save-ai-chat]')) return;
+            sessionStorage.setItem(RETURN_KEY, `${location.pathname.split('/').pop()}${location.search}${location.hash}`);
+            location.href = 'login.html#login';
+        });
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const record = {
+                id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                createdAt: new Date().toISOString(),
+                answers: Object.fromEntries(['region', 'style', 'duration', 'companion', 'pace', 'transport', 'budget', 'mustVisit', 'details'].map(key => [key, String(formData.get(key) || '').trim()]))
+            };
+
+            chatContainer.classList.remove('hidden');
+            chatBox.innerHTML = userMessageHTML(record);
+            const typingId = `typing-${Date.now()}`;
+            setTimeout(() => {
+                chatBox.insertAdjacentHTML('beforeend', `<div id="${typingId}" class="flex justify-start chat-bubble"><div class="flex items-center gap-2 apple-glass-bubble-ai p-4 px-5"><div class="w-2.5 h-2.5 bg-brand-green/80 rounded-full typing-dot"></div><div class="w-2.5 h-2.5 bg-brand-green/80 rounded-full typing-dot"></div><div class="w-2.5 h-2.5 bg-brand-green/80 rounded-full typing-dot"></div></div></div>`);
+                chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+            }, 400);
+
+            setTimeout(() => {
+                document.getElementById(typingId)?.remove();
+                chatBox.insertAdjacentHTML('beforeend', aiMessageHTML(record, !currentEmail));
+                chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+                if (currentEmail) saveConversation(record);
+                else sessionStorage.setItem(PENDING_KEY, JSON.stringify(record));
+            }, 2000);
+        });
+
+        if (currentEmail) {
+            try {
+                const pending = JSON.parse(sessionStorage.getItem(PENDING_KEY) || 'null');
+                if (pending?.id && pending.answers) {
+                    saveConversation(pending);
+                    sessionStorage.removeItem(PENDING_KEY);
+                }
+            } catch (_) { sessionStorage.removeItem(PENDING_KEY); }
+            const records = getHistory();
+            if (records.length) {
+                historyButton.hidden = false;
+                showConversation(records[records.length - 1]);
+                requestAnimationFrame(() => chatContainer.scrollIntoView({ block: 'start' }));
+            }
+        }
+    })();
+    </script>
+<script>
+(()=>{const nav=document.getElementById("globalNav"),button=document.getElementById("globalMenuBtn"),menu=document.getElementById("globalMobileMenu");if(!nav||!button||!menu)return;const close=()=>{menu.classList.remove("open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","開啟選單")};button.addEventListener("click",()=>{const open=button.getAttribute("aria-expanded")==="true";menu.classList.toggle("open",!open);button.setAttribute("aria-expanded",String(!open));button.setAttribute("aria-label",open?"開啟選單":"關閉選單")});menu.querySelectorAll("a").forEach(link=>link.addEventListener("click",close));window.addEventListener("resize",()=>{if(innerWidth>920)close()});window.addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>24),{passive:true})})();
+</script><script src="site-auth.js"></script></body>
+</html>
+
+

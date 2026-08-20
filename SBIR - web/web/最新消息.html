@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#587d77">
+  <title>最新消息｜桃園偏鄉輕旅行</title>
+  <meta name="description" content="掌握桃園偏鄉輕旅行的最新動態、活動快訊與好康優惠。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="nav-unified.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="最新消息.css">
+</head>
+<body>
+  <header class="site-nav" id="siteNav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="桃園偏鄉輕旅行首頁"><img class="brand-logo" src="../imgs/logo.png" alt="桃園偏鄉輕旅行"></a>
+      <nav class="desktop-links" aria-label="主要導覽"><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a class="active" href="最新消息.html">最新消息</a></nav>
+      <div class="nav-tools"><a class="auth-btn login-btn" href="login.html#login" data-auth-entry="login">登入</a><a class="auth-btn signup-btn" href="login.html#register" data-auth-entry="register">註冊</a></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="開啟選單"><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu"><div><div class="mobile-tools"><div class="mobile-auth"><a class="auth-btn login-btn" href="login.html#login" data-auth-entry="login">登入</a><a class="auth-btn signup-btn" href="login.html#register" data-auth-entry="register">註冊</a></div></div><nav><a href="AI智慧推薦系統.html">AI 智慧推薦系統</a><a href="定位打卡領好康.html">定位打卡</a><a href="數位集章趣.html">數位集章</a><a href="體驗活動線上報名.html">體驗活動</a><a href="在地好物直送.html">在地好物</a><a href="場域介紹.html">場域介紹</a><a class="active" href="最新消息.html">最新消息</a></nav></div></div>
+  </header>
+
+  <main>
+    <!-- 最新消息專屬 Banner：具備視差固定背景效果 -->
+    <section class="news-banner" id="top" style="background-image: url('../imgs/1.jpg');">
+      <div class="banner-overlay"></div>
+      <div class="banner-content">
+        <p class="banner-kicker">LATEST NEWS</p>
+        <h1>最新消息</h1>
+        <p class="banner-sub">掌握桃園偏鄉輕旅行的最新動態、活動快訊與好康優惠，隨時出發你的下一趟旅程。</p>
+      </div>
+    </section>
+
+    <!-- 最新消息主要區塊 -->
+    <section class="news-section" id="news" aria-label="最新消息列表">
+      <div class="news-container">
+        
+        <!-- 搜尋列 -->
+        <div class="advanced-search-shell">
+          <div class="advanced-search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="newsSearch" placeholder="請輸入關鍵字">
+            <button type="button" class="btn-advanced" id="btnAdvanced" aria-expanded="false" aria-controls="advancedPanel"><i class="fa-solid fa-sliders"></i> 進階搜尋</button>
+          </div>
+
+          <div class="advanced-panel" id="advancedPanel" aria-hidden="true">
+            <div class="advanced-panel-head">
+              <div>
+                <span class="advanced-eyebrow">FILTER</span>
+                <h2>主題類型</h2>
+              </div>
+              <button type="button" class="advanced-close" id="advancedClose" aria-label="關閉進階搜尋"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="advanced-options" role="group" aria-label="主題類型">
+              <button type="button" class="advanced-option active" data-cat="all">全部消息</button>
+              <button type="button" class="advanced-option" data-cat="活動快訊">活動快訊</button>
+              <button type="button" class="advanced-option" data-cat="系統公告">系統公告</button>
+              <button type="button" class="advanced-option" data-cat="好康優惠">好康優惠</button>
+            </div>
+            <div class="advanced-panel-footer">
+              <button type="button" class="advanced-clear" id="advancedClear">清除</button>
+              <button type="button" class="advanced-submit" id="advancedSubmit">共有 <strong id="advancedCount">0</strong> 個結果</button>
+            </div>
+          </div>
+        </div>
+<!-- 排序與總筆數 (Toolbar) -->
+        <div class="toolbar-meta">
+          <div class="total-count">共 <span id="totalCount">0</span> 條消息</div>
+          <div class="sort-wrap custom-sort" id="newsSort">
+            <button class="sort-trigger" id="sortTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
+              <span id="sortLabel">排序：由新至舊</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="sort-menu" id="sortMenu" role="listbox" aria-label="排序方式" aria-hidden="true">
+              <button class="sort-option is-selected" type="button" role="option" aria-selected="true" data-value="newest"><span>由新至舊</span><i class="fa-solid fa-check"></i></button>
+              <button class="sort-option" type="button" role="option" aria-selected="false" data-value="oldest"><span>由舊至新</span><i class="fa-solid fa-check"></i></button>
+            </div>
+            <select id="sortSelect" class="sort-native" tabindex="-1" aria-hidden="true">
+              <option value="newest">排序：由新至舊</option>
+              <option value="oldest">排序：由舊至新</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 消息卡片網格 -->
+        <div class="news-grid" id="newsGrid">
+          
+          <a href="最新消息詳情.html?id=1" class="news-card" data-category="活動快訊" data-date="2026-08-19">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">19</span><span class="month-year">AUG 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1542223189-67a03fa0f0bd?q=80&w=800&auto=format&fit=crop" alt="拉拉山採果" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">活動快訊</span>
+              <h3 class="news-title">秋季拉拉山採果體驗，早鳥報名正式開跑！</h3>
+              <p class="news-excerpt">隨著秋季到來，拉拉山即將迎來最豐收的季節。現在報名即可享有早鳥8折優惠，名額有限，快來預約你的自然農村之旅。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=2" class="news-card" data-category="系統公告" data-date="2026-08-15">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">15</span><span class="month-year">AUG 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=800&auto=format&fit=crop" alt="系統公告" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">系統公告</span>
+              <h3 class="news-title">數位集章趣功能更新維護通知</h3>
+              <p class="news-excerpt">為提供更穩定的打卡服務，系統將於本週五凌晨進行維護更新，期間將暫停數位集章功能，造成不便敬請見諒。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=3" class="news-card" data-category="好康優惠" data-date="2026-08-10">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">10</span><span class="month-year">AUG 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800&auto=format&fit=crop" alt="大溪老街優惠" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">好康優惠</span>
+              <h3 class="news-title">大溪老街聯名套票發售，限量贈送特色木藝紀念品</h3>
+              <p class="news-excerpt">搭配大溪老街在地商圈，推出一日輕旅行套票。憑票根不僅能品嚐在地美食，還能兌換精美的在地木藝小禮物。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=4" class="news-card" data-category="活動快訊" data-date="2026-08-05">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">05</span><span class="month-year">AUG 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?q=80&w=800&auto=format&fit=crop" alt="觀音蓮花季" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">活動快訊</span>
+              <h3 class="news-title">觀音蓮花季一日遊開放報名，體驗乘坐大王蓮</h3>
+              <p class="news-excerpt">夏季不可錯過的觀音區蓮花季登場！除了欣賞大面積蓮花田，還有最受歡迎的大王蓮水上漂體驗，適合親子同樂。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=5" class="news-card" data-category="好康優惠" data-date="2026-08-01">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">01</span><span class="month-year">AUG 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop" alt="紅利點數雙倍" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">好康優惠</span>
+              <h3 class="news-title">歡慶旅遊網會員突破十萬！紅利點數雙倍送活動</h3>
+              <p class="news-excerpt">感謝旅客支持，即日起至月底前，凡透過官網預訂任一體驗行程或購買在地好物，結帳即享紅利點數雙倍回饋！</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=6" class="news-card" data-category="系統公告" data-date="2026-07-28">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">28</span><span class="month-year">JUL 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop" alt="AI智慧推薦" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">系統公告</span>
+              <h3 class="news-title">AI 智慧推薦系統 Beta 版上線邀請測試</h3>
+              <p class="news-excerpt">不知道去哪玩？全新推出的 AI 推薦系統能根據您的同行人數、時間與喜好，自動規劃專屬的桃園偏鄉輕旅行路線。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=7" class="news-card" data-category="活動快訊" data-date="2026-07-20">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">20</span><span class="month-year">JUL 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1596748434676-e91b5c404cfd?q=80&w=800&auto=format&fit=crop" alt="客庄文化導覽" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">活動快訊</span>
+              <h3 class="news-title">龍潭三坑老街：客庄文化深度導覽免費體驗</h3>
+              <p class="news-excerpt">跟著在地達人的腳步，走讀擁有百年歷史的三坑老街。了解客家文化、品嚐牛汶水，名額僅限20名，額滿為止。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+          <a href="最新消息詳情.html?id=8" class="news-card" data-category="好康優惠" data-date="2026-07-12">
+            <div class="news-thumb">
+              <div class="news-date"><span class="day">12</span><span class="month-year">JUL 2026</span></div>
+              <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=800&auto=format&fit=crop" alt="自行車優惠" loading="lazy">
+            </div>
+            <div class="news-body">
+              <span class="news-category">好康優惠</span>
+              <h3 class="news-title">新屋綠色隧道自行車租借優惠，平日享第二台半價</h3>
+              <p class="news-excerpt">享受微風與海岸線的美景！平日於新屋綠色隧道指定合作店家租借自行車，出示官網電子憑證即可享有第二台半價優惠。</p>
+              <div class="news-footer"><span class="read-more">閱讀全文 <i class="fa-solid fa-arrow-right"></i></span></div>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- 無結果提示 -->
+        <div id="noResultMessage" style="display: none; text-align: center; padding: 40px; color: #88948d;">
+          找不到符合條件的消息，請嘗試更換關鍵字或分類。
+        </div>
+
+        <!-- 載入更多 CTA -->
+        <div class="load-more-wrap" style="margin-top: 50px; text-align: center;">
+          <button class="btn-load-more" type="button" id="btnLoadMore">載入更多消息</button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="field-footer">
+    <div class="footer-inner">
+      <div class="footer-copy">桃園偏鄉輕旅行<br>在地體驗 × 永續旅行 × 農創共好</div>
+      <nav class="footer-links" aria-label="頁尾導覽"><a href="#top">回到頂部</a><a href="index.html#discover">探索服務</a><a href="最新消息.html">最新消息</a></nav>
+    </div>
+  </footer>
+
+  <button type="button" class="back-to-top" id="backToTop" aria-label="回到頁面頂部" title="回到頂部">
+    <span class="back-to-top-icon" aria-hidden="true"></span>
+  </button>
+
+  <script src="最新消息.js"></script>
+  <script src="site-auth.js"></script>
+</body>
+</html>
