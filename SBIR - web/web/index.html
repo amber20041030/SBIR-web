@@ -147,7 +147,7 @@
   .home-footer .footer-inner{display:flex;flex-direction:column;justify-content:center;gap:19px;text-align:center}
   .home-footer .footer-copy{width:100%;text-align:center}
   .home-footer .footer-links{width:100%;margin-top:0;flex-wrap:wrap;justify-content:center;text-align:center}
-}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css"><link rel="stylesheet" href="site-enhancements.css?v=20260820-transparent">
+}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">  <link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="nav-unified.css"><link rel="stylesheet" href="site-enhancements.css?v=20260820-loading-poster">
 </head><body>
 <header class="site-nav" id="siteNav">
  <div class="nav-inner">
@@ -210,7 +210,7 @@
   </section>
 </div>
 <script>
-(()=>{const launcher=document.getElementById("aiAssistantLauncher"),modal=document.getElementById("aiAssistantModal"),closeButton=document.getElementById("aiAssistantClose"),frame=document.getElementById("aiAssistantFrame");if(!launcher||!modal||!closeButton||!frame)return;
+(()=>{const launcher=document.getElementById("aiAssistantLauncher"),modal=document.getElementById("aiAssistantModal"),closeButton=document.getElementById("aiAssistantClose"),frame=document.getElementById("aiAssistantFrame"),image=launcher?.querySelector("img");if(!launcher||!modal||!closeButton||!frame||!image)return;const showAnimation=()=>launcher.classList.add("is-loaded");if(image.complete&&image.naturalWidth)showAnimation();else image.addEventListener("load",showAnimation,{once:true});
  const openAssistant=()=>{if(!frame.getAttribute("src"))frame.setAttribute("src",frame.dataset.src);modal.hidden=false;document.body.classList.add("ai-assistant-open");launcher.setAttribute("aria-expanded","true");closeButton.focus()};
  const closeAssistant=()=>{modal.hidden=true;document.body.classList.remove("ai-assistant-open");launcher.setAttribute("aria-expanded","false");launcher.focus()};
  launcher.addEventListener("click",openAssistant);

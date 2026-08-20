@@ -56,8 +56,8 @@
 @media (prefers-reduced-motion: reduce) { .footer-social-link { transition: none; } }
 
 /* Homepage AI travel assistant */
-.ai-assistant-launcher{position:fixed;z-index:120;right:8px;bottom:24px;width:119px;height:212px;aspect-ratio:9/16;padding:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none;cursor:pointer;transition:transform .2s,filter .2s}
-.ai-assistant-launcher img{width:100%;height:100%;display:block;object-fit:cover}.ai-assistant-launcher:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05)}.ai-assistant-launcher:focus-visible{outline:3px solid #b8d6c6;outline-offset:4px}
+.ai-assistant-launcher{position:fixed;z-index:120;right:8px;bottom:24px;width:119px;height:212px;aspect-ratio:9/16;padding:0;overflow:hidden;border:0;border-radius:0;background:transparent url("../imgs/AI旅遊小助手poster.png?v=20260820") center/cover no-repeat;box-shadow:none;cursor:pointer;transition:transform .2s,filter .2s}
+.ai-assistant-launcher img{width:100%;height:100%;display:block;object-fit:cover;opacity:0;transition:opacity .15s ease}.ai-assistant-launcher.is-loaded{background-image:none}.ai-assistant-launcher.is-loaded img{opacity:1}.ai-assistant-launcher:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05)}.ai-assistant-launcher:focus-visible{outline:3px solid #b8d6c6;outline-offset:4px}
 .ai-assistant-modal[hidden]{display:none}.ai-assistant-modal{position:fixed;z-index:200;inset:0;display:grid;place-items:center;padding:24px}
 .ai-assistant-backdrop{position:absolute;inset:0;background:rgba(2,8,5,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .ai-assistant-panel{position:relative;width:min(980px,calc(100vw - 48px));height:min(760px,calc(100dvh - 48px));display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:28px;background:#f5f7f5;box-shadow:0 35px 100px rgba(0,0,0,.55)}
