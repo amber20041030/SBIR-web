@@ -30,12 +30,21 @@ const nav=document.getElementById('siteNav'),toggle=document.getElementById('men
 
 // 模擬全部場域資料庫 (可擴展至 300+ 筆資料)
 const allFieldsData = [
+  { id: 11, name: "大溪木藝生態博物館", district: "大溪", category: "客庄", tags: ["木藝", "博物館", "老城"], img: "../imgs/大溪木藝生態博物館.jpg", link: "場域詳情.html?id=11", demo: true },
   { id: 1, name: "拉拉山巨木群步道", district: "復興", category: "山林", tags: ["步道", "避暑", "巨木"], img: "assets/fields/01.jpg?v=20260819-14", link: "場域詳情.html?id=1" },
   { id: 2, name: "大溪老茶廠", district: "大溪", category: "客庄", tags: ["茶文化", "歷史建築", "室內"], img: "assets/fields/02.jpg?v=20260819-14", link: "場域詳情.html?id=2" },
-  { id: 3, name: "三坑老街與自然生態公園", district: "龍潭", category: "老街", tags: ["美食", "單車", "客庄"], img: "assets/fields/03.jpg?v=20260819-14", link: "場域詳情.html?id=3" },
+  { id: 8, name: "大溪老街", district: "大溪", category: "老街", tags: ["巴洛克街屋", "木藝", "古早味"], img: "assets/fields/02.jpg?v=20260819-14", link: "場域詳情.html?id=8" },
+  { id: 3, name: "三坑老街與自然生態公園", district: "龍潭", category: "老街", tags: ["美食", "單車", "客庄"], img: "../imgs/三坑自然生態公園.jpg", link: "場域詳情.html?id=3" },
   { id: 4, name: "宇內溪戲水區", district: "復興", category: "山林", tags: ["親水", "親子", "瀑布"], img: "assets/fields/04.jpg?v=20260819-14", link: "場域詳情.html?id=4" },
   { id: 5, name: "觀音永安漁港海螺館", district: "新屋", category: "海岸", tags: ["海景", "建築美學", "夕陽"], img: "assets/fields/01.jpg?v=20260819-14", link: "場域詳情.html?id=5" },
-  { id: 6, name: "向陽農場", district: "觀音", category: "農村", tags: ["向日葵", "採花", "親子"], img: "assets/fields/02.jpg?v=20260819-14", link: "場域詳情.html?id=6" }
+  { id: 6, name: "向陽農場", district: "觀音", category: "農村", tags: ["向日葵", "採花", "親子"], img: "assets/fields/02.jpg?v=20260819-14", link: "場域詳情.html?id=6" },
+  { id: 12, name: "李騰芳古宅", district: "大溪", category: "客庄", tags: ["國定古蹟", "古宅", "建築"], img: "../imgs/李騰芳古宅.jpg", link: "場域詳情.html?id=12" },
+  { id: 13, name: "慈湖紀念雕塑公園", district: "大溪", category: "山林", tags: ["湖景", "步道", "歷史"], img: "../imgs/慈湖紀念雕塑公園.jpg", link: "場域詳情.html?id=13" },
+  { id: 14, name: "後慈湖", district: "大溪", category: "山林", tags: ["生態", "秘境", "湖景"], img: "../imgs/後慈湖.jpg", link: "場域詳情.html?id=14" },
+  { id: 15, name: "月眉休閒農業區", district: "大溪", category: "農村", tags: ["田園", "親子", "單車"], img: "../imgs/月眉休閒農業區.jpg", link: "場域詳情.html?id=15" },
+  { id: 16, name: "大溪河濱公園", district: "大溪", category: "親子", tags: ["河岸", "草地", "親子"], img: "../imgs/大溪河濱公園.jpg", link: "場域詳情.html?id=16" },
+  { id: 17, name: "百吉林蔭步道", district: "大溪", category: "山林", tags: ["步道", "森林", "健行"], img: "../imgs/百吉林蔭步道.jpg", link: "場域詳情.html?id=17" },
+  { id: 18, name: "頭寮經國紀念館", district: "大溪", category: "客庄", tags: ["歷史", "人文", "庭園"], img: "../imgs/頭寮經國紀念館.jpg", link: "場域詳情.html?id=18" }
 ];
 
 const PAGE_SIZE = 12; // 每次載入數量
@@ -79,7 +88,7 @@ function renderCards() {
           </div>
           <div class="card-body">
             <span class="card-district"><i class="fa-solid fa-location-dot"></i> 桃園 · ${item.district}區</span>
-            <h3 class="card-title">${item.name}</h3>
+            <div class="card-title-row"><h3 class="card-title">${item.name}</h3>${item.demo ? `<span class="map-demo-label"><i class="fa-solid fa-route"></i> 地圖預覽示範</span>` : ""}</div>
             <div class="card-tags">
               ${item.tags.map(t => `<span class="card-tag">#${t}</span>`).join("")}
             </div>
@@ -156,19 +165,31 @@ if (btnLoadMore) {
     });
 }
 
-// 初始化渲染
-document.addEventListener('DOMContentLoaded', () => {
+// 保存並還原探索篩選、搜尋、載入數量與捲動位置。
+const FIELD_RETURN_KEY="fieldReturnState";
+function saveFieldReturnState(){
+  sessionStorage.setItem(FIELD_RETURN_KEY,JSON.stringify({url:location.href,scrollY:window.scrollY,category:activeCategory,district:activeDistrict,keyword,currentVisible}));
+}
+function restoreFieldState(){
+  const params=new URLSearchParams(location.search),navigation=performance.getEntriesByType?.("navigation")?.[0]?.type;
+  if(params.get("restore")!=="1"&&navigation!=="back_forward")return false;
+  try{
+    const state=JSON.parse(sessionStorage.getItem(FIELD_RETURN_KEY));if(!state)return false;
+    activeCategory=state.category||"all";activeDistrict=state.district||"all";keyword=state.keyword||"";currentVisible=Number(state.currentVisible)||PAGE_SIZE;
+    document.querySelectorAll(".category-chips .chip").forEach(chip=>{const selected=chip.dataset.cat===activeCategory;chip.classList.toggle("active",selected);chip.setAttribute("aria-selected",String(selected))});
+    const options=[...document.querySelectorAll("#districtSelect .custom-select-option")],selectedOption=options.find(option=>option.dataset.value===activeDistrict)||options[0];
+    options.forEach(option=>{const selected=option===selectedOption;option.classList.toggle("is-selected",selected);option.setAttribute("aria-selected",String(selected))});
+    const trigger=document.querySelector("#districtSelect .custom-select-trigger span");if(trigger)trigger.textContent=selectedOption.textContent;
+    if(fieldSearch)fieldSearch.value=keyword;
     renderCards();
-});
+    requestAnimationFrame(()=>{if(params.get("target")==="all-fields")document.getElementById("all-fields")?.scrollIntoView();else if(Number.isFinite(state.scrollY))scrollTo(0,state.scrollY);params.delete("restore");params.delete("target");const clean=location.pathname+(params.size?"?"+params:"")+location.hash;history.replaceState(history.state,"",clean)});
+    return true;
+  }catch(error){return false}
+}
+document.addEventListener('DOMContentLoaded',()=>{if(!restoreFieldState())renderCards()});
 
-
-
-
-
-
-
-
-
+/* Remember the exact discovery state before opening a detail page. */
+document.addEventListener("click",event=>{if(event.target.closest('a[href^="場域詳情.html"]'))saveFieldReturnState()});
 /* Pointer swipe: touch on mobile and mouse drag on desktop. */
 let swipeStartX=0,swipeStartY=0,swipeDeltaX=0,swipePointer=null;
 const resetSwipe=()=>{swipePointer=null;swipeDeltaX=0;hero.classList.remove("is-swiping")};
